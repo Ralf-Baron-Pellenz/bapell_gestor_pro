@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#121826" />
+  <title>Bapell Gestor Pro — precificação e gestão para quem vende em marketplace</title>
+  <meta name="description"
+    content="Programa para Windows de precificação e gestão para vendedores de marketplace. Calcule o preço de venda com custo, comissão, impostos, frete e margem, e organize vendas, financeiro, notas e prazos. Funciona sem internet. Licença Anual, Licença Vitalícia, Pro e Platinum." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Bapell Gestor Pro — precificação e gestão para quem vende em marketplace" />
+  <meta property="og:description"
+    content="Calcule o preço de venda com seus custos, taxas e margem, e organize a operação num só programa. Funciona sem internet. Licença Anual, Licença Vitalícia, Pro e Platinum." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:image" content="img/app/painel.webp" />
+
+  <link rel="icon" type="image/png" href="icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Sora:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="preload" as="image" href="img/app/produto-preco.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+
+<body id="topo">
+
+  <!-- Barra de leitura: mostra quanto da página já foi percorrido -->
+  <div class="leitura" aria-hidden="true"><span id="leitura"></span></div>
+
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="aurora-blob aurora-blob--1"></div>
+    <div class="aurora-blob aurora-blob--2"></div>
+    <div class="aurora-blob aurora-blob--3"></div>
+    <div class="noise-overlay"></div>
+  </div>
+
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+  <!-- ═══════════ NAVEGAÇÃO ═══════════ -->
+  <nav class="nav" id="nav" aria-label="Principal">
+    <div class="nav__inner wrap">
+      <a class="brand" href="#topo" aria-label="Bapell Gestor Pro — início">
+        <span class="brand__logo"><img src="icon.png" alt="" class="brand__icon-img" width="20" height="20"></span>
+        <span class="brand__name">Bapell <strong>Gestor Pro</strong></span>
+      </a>
+
+      <div class="nav__links" id="navLinks">
+        <a class="nav__link" href="#como-funciona">Como funciona</a>
+        <a class="nav__link" href="#demo">Ver em uso</a>
+        <a class="nav__link" href="#modulos">Módulos</a>
+        <a class="nav__link" href="#planos">Planos</a>
+        <a class="nav__link" href="#faq">Dúvidas</a>
+        <span class="nav__marcador" id="navMarcador" aria-hidden="true"></span>
+      </div>
+
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm nav__cta" href="#planos">Comprar</a>
+        <button class="nav__menu" id="navMenu" type="button" aria-expanded="false" aria-controls="menuMobile"
+          aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menu do celular e do tablet -->
+  <div class="menu-mobile" id="menuMobile" hidden>
+    <div class="menu-mobile__corpo">
+      <a href="#como-funciona" style="--i:0">Como funciona</a>
+      <a href="#demo" style="--i:1">Ver em uso</a>
+      <a href="#modulos" style="--i:2">Módulos</a>
+      <a href="#planilhas" style="--i:3">Processador de Planilha</a>
+      <a href="#planos" style="--i:4">Planos e preços</a>
+      <a href="#faq" style="--i:5">Dúvidas</a>
+      <a class="btn btn--primary btn--lg" href="#planos" style="--i:6">Ver planos e comprar</a>
+    </div>
+  </div>
+
+  <main id="conteudo">
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <header class="hero">
+      <div class="hero__grid wrap">
+
+        <div class="hero__copy">
+          <h1 id="heroTitle">
+            <span class="word"><span>Você</span></span>
+            <span class="word"><span>deveria</span></span>
+            <span class="word"><span>saber</span></span>
+            <span class="word"><span>por</span></span>
+            <span class="word"><span>quanto</span></span>
+            <span class="word"><span>vender</span></span>
+            <span class="word"><span>antes</span></span>
+            <span class="word"><span>de</span></span>
+            <span class="word"><span>anunciar.</span></span>
+          </h1>
+
+          <p class="lede rv" style="--d:160ms">
+            O Bapell Gestor Pro calcula o preço de venda de cada produto, em cada plataforma que você cadastrar,
+            com custo, comissão, impostos, frete e a margem que você quer. E organiza o resto da operação:
+            vendas, financeiro, notas fiscais e prazos.
+          </p>
+
+          <div class="hero__actions rv" style="--d:240ms">
+            <a class="btn btn--primary btn--lg btn--brilho" href="#planos">
+              <span>Ver planos e comprar</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a class="btn btn--ghost btn--lg" href="#demo">
+              <span>Ver o app em uso</span>
+            </a>
+          </div>
+
+          <ul class="hero__trust rv" style="--d:320ms">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg> Licença Anual ou Vitalícia</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg> Seus dados no seu PC</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="2" y1="2" x2="22" y2="22"></line>
+                <path d="M8.5 8.5a5 5 0 0 1 7 0"></path>
+                <path d="M5 5a10 10 0 0 1 14 0"></path>
+              </svg> Funciona sem internet</li>
+          </ul>
+        </div>
+
+        <div class="hero__palco">
+          <!-- A ficha de verdade, ao fundo: o que a amostra resume -->
+          <figure class="janela janela--fundo" id="heroFundo" aria-hidden="true">
+            <div class="janela__barra">
+              <span class="janela__titulo">Bapell Gestor Pro — Garrafa Térmica Inox 1L</span>
+              <span class="janela__ctrl"><i></i><i></i><i></i></span>
+            </div>
+            <img src="img/app/produto-preco.webp" alt="" width="1600" height="1111" fetchpriority="high" decoding="async">
+          </figure>
+
+          <aside class="ledger rv-right" style="--d:200ms" aria-labelledby="ledgerTag" id="ledger-widget">
+            <div class="ledger__glass"></div>
+
+            <!-- Barra de título no estilo de uma janela do Windows: o painel
+                 lê como o aplicativo aberto sobre o site. -->
+            <div class="ledger__bar">
+              <span class="ledger__file">Bapell Gestor Pro — Precificação</span>
+              <span class="janela__ctrl" aria-hidden="true"><i></i><i></i><i></i></span>
+            </div>
+
+            <div class="ledger__body">
+              <div class="ledger__head">
+                <div class="ledger__tagline" id="ledgerTag">
+                  <span class="status-indicator"></span> Amostra breve da precificação
+                </div>
+              </div>
+
+              <p class="ledger__hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="8 9 5 12 8 15"></polyline>
+                  <polyline points="16 9 19 12 16 15"></polyline>
+                </svg>
+                Arraste os controles e veja o preço mudar
+              </p>
+
+              <div class="ledger__inputs">
+                <div class="field-group">
+                  <div class="field">
+                    <label for="custo">Custo do produto</label>
+                    <div class="money money--readonly">
+                      <span class="money__prefix" aria-hidden="true">R$</span>
+                      <input id="custo" type="text" inputmode="decimal" value="500,00" autocomplete="off" data-money readonly />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="frete">Custo de frete</label>
+                    <div class="money">
+                      <span class="money__prefix" aria-hidden="true">R$</span>
+                      <input id="frete" type="text" inputmode="decimal" value="0,00" autocomplete="off" data-money />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="comissao"><span>Comissão da plataforma</span> <output for="comissao" id="comissaoOut" class="out-badge">14%</output></label>
+                  <div class="range-wrapper range-wrapper--fee">
+                    <input id="comissao" type="range" min="0" max="30" step="0.5" value="14" data-out="comissaoOut" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="imposto"><span>Imposto da nota</span> <output for="imposto" id="impostoOut" class="out-badge">6%</output></label>
+                  <div class="range-wrapper range-wrapper--tax">
+                    <input id="imposto" type="range" min="0" max="30" step="0.5" value="6" data-out="impostoOut" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="margem"><span>Margem de lucro desejada</span> <output for="margem" id="margemOut" class="out-badge out-badge--primary">20%</output></label>
+                  <div class="range-wrapper range-wrapper--primary">
+                    <input id="margem" type="range" min="0" max="60" step="0.5" value="20" data-out="margemOut" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="ledger__out" aria-live="polite">
+                <div class="result-cards">
+                  <div class="result-card result-card--main">
+                    <span class="result__label">Preço de venda</span>
+                    <span class="result__value" id="preco">R$ 0,00</span>
+                  </div>
+                  <div class="result-card">
+                    <span class="result__label">Lucro estimado</span>
+                    <span class="result__value result__value--mint" id="lucro">R$ 0,00</span>
+                  </div>
+                </div>
+
+                <div class="bar-container">
+                  <div class="bar" id="bar" role="img" aria-label="Composição do preço de venda">
+                    <span class="bar__seg bar__seg--cost" style="width:53%"></span>
+                    <span class="bar__seg bar__seg--fee" style="width:14%"></span>
+                    <span class="bar__seg bar__seg--tax" style="width:6%"></span>
+                    <span class="bar__seg bar__seg--profit" style="width:20%"></span>
+                  </div>
+                </div>
+
+                <ul class="legend">
+                  <li><i class="dot dot--cost"></i>Custo</li>
+                  <li><i class="dot dot--fee"></i>Comissão</li>
+                  <li><i class="dot dot--tax"></i>Imposto</li>
+                  <li><i class="dot dot--profit"></i>Lucro</li>
+                </ul>
+
+                <div class="ledger__warn" id="warn" hidden>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                  <span>Comissão, imposto e margem somados não podem chegar a 100% do preço.</span>
+                </div>
+
+                <p class="ledger__nota">No app, esse cálculo roda por produto, por kit e por plataforma, com taxa fixa,
+                  impostos de compra e as suas taxas já salvas.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ═══════════ O PROBLEMA ═══════════ -->
+    <section class="problema" id="problema">
+      <div class="wrap problema__grid">
+        <div class="problema__cabeca rv">
+          <p class="rotulo">Quem vende online conhece</p>
+          <h2>A conta certa está espalhada em seis lugares.</h2>
+          <p class="sec-head__p">
+            O custo está numa planilha. A comissão, no site da plataforma. O imposto, com o contador.
+            O frete muda por região. E o resultado do mês só aparece quando alguém senta e soma tudo à mão.
+          </p>
+        </div>
+
+        <ul class="prob-lista">
+          <li class="prob-item rv" style="--d:0ms">
+            <span class="prob-item__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+            <div>
+              <h3>Preço no chute</h3>
+              <p>Sem somar comissão, imposto e frete antes de anunciar, o preço vira estimativa — e o prejuízo só aparece no fim do mês.</p>
+            </div>
+          </li>
+          <li class="prob-item rv" style="--d:80ms">
+            <span class="prob-item__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg></span>
+            <div>
+              <h3>Cada plataforma com uma taxa</h3>
+              <p>O mesmo produto precisa de preços diferentes em cada canal. Fazer isso na planilha significa refazer a conta toda vez.</p>
+            </div>
+          </li>
+          <li class="prob-item rv" style="--d:160ms">
+            <span class="prob-item__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></span>
+            <div>
+              <h3>Kits que ninguém sabe precificar</h3>
+              <p>Dois, três, seis unidades. Cada combinação muda o frete e o custo, e a conta raramente é refeita.</p>
+            </div>
+          </li>
+          <li class="prob-item rv" style="--d:240ms">
+            <span class="prob-item__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="13" y2="17"></line></svg></span>
+            <div>
+              <h3>O relatório que ninguém lê</h3>
+              <p>A planilha de vendas do marketplace tem centenas de linhas e não responde a pergunta simples: sobrou quanto?</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════════ COMO FUNCIONA (rolagem com a janela fixa) ═══════════ -->
+    <section class="como" id="como-funciona">
+      <div class="wrap">
+        <div class="sec-head sec-head--esq rv">
+          <p class="rotulo">Como funciona</p>
+          <h2>Do cadastro ao resultado, no mesmo programa.</h2>
+          <p class="sec-head__p">Quatro etapas que conversam entre si. As telas abaixo são do próprio Bapell, com dados de
+            demonstração.</p>
+        </div>
+
+        <div class="como__grid">
+          <ol class="como__passos" id="comoPassos">
+            <li class="como__passo is-ativo" data-passo="0">
+              <span class="como__n">1</span>
+              <div class="como__texto">
+                <h3>Cadastre suas lojas e produtos</h3>
+                <p>Cada canal de venda vira um cartão com nome e logo. Dentro dele ficam os produtos, com fotos, SKU, ID do
+                  anúncio, custo, impostos de compra e dimensões. Para levar um produto a outra loja, é só clonar.</p>
+                <figure class="como__img-movel janela">
+                  <div class="janela__barra"><span class="janela__titulo">Mercado Livre — produtos</span><span class="janela__ctrl"><i></i><i></i><i></i></span></div>
+                  <img src="img/app/plataforma-p.webp" alt="Lista de produtos do Mercado Livre no Bapell, com fotos, SKU, tipo e os preços Premium e Clássico" width="760" height="475" loading="lazy" decoding="async">
+                </figure>
+              </div>
+            </li>
+            <li class="como__passo" data-passo="1">
+              <span class="como__n">2</span>
+              <div class="como__texto">
+                <h3>Precifique com a conta inteira</h3>
+                <p>Frete, taxa fixa, comissão, imposto da nota e a margem que você quer, em % ou em reais. O preço e o lucro
+                  estimado aparecem enquanto você digita. No Mercado Livre, Premium e Clássico saem lado a lado.</p>
+                <figure class="como__img-movel janela">
+                  <div class="janela__barra"><span class="janela__titulo">Ficha do produto</span><span class="janela__ctrl"><i></i><i></i><i></i></span></div>
+                  <img src="img/app/produto-preco-p.webp" alt="Ficha do produto com variáveis de venda, margem, valores Premium e Clássico, Preços Extras e kits" width="760" height="528" loading="lazy" decoding="async">
+                </figure>
+              </div>
+            </li>
+            <li class="como__passo" data-passo="2">
+              <span class="como__n">3</span>
+              <div class="como__texto">
+                <h3>Registre e importe as vendas</h3>
+                <p>Vendas diretas entram pelo Registro de Vendas, com orçamento em PDF. Nos planos Pro e Platinum, o
+                  Processador de Planilha lê o relatório da plataforma e mostra quanto sobrou.</p>
+                <figure class="como__img-movel janela">
+                  <div class="janela__barra"><span class="janela__titulo">Registro de Vendas</span><span class="janela__ctrl"><i></i><i></i><i></i></span></div>
+                  <img src="img/app/registro-vendas-p.webp" alt="Registro de Vendas com indicadores, filtros e as vendas lançadas" width="760" height="475" loading="lazy" decoding="async">
+                </figure>
+              </div>
+            </li>
+            <li class="como__passo" data-passo="3">
+              <span class="como__n">4</span>
+              <div class="como__texto">
+                <h3>Acompanhe o resultado</h3>
+                <p>O Controle Financeiro mostra o DRE do período, os indicadores comparados com o período anterior, quanto
+                  cada canal deixa com você e a meta do mês. Exporte em PDF ou planilha do Excel.</p>
+                <figure class="como__img-movel janela">
+                  <div class="janela__barra"><span class="janela__titulo">DRE e Controle Financeiro</span><span class="janela__ctrl"><i></i><i></i><i></i></span></div>
+                  <img src="img/app/financeiro-p.webp" alt="Controle Financeiro com período, meta, indicadores e insights" width="760" height="507" loading="lazy" decoding="async">
+                </figure>
+              </div>
+            </li>
+          </ol>
+
+          <div class="como__palco" aria-hidden="true">
+            <div class="como__janela janela">
+              <div class="janela__barra">
+                <span class="janela__titulo" id="comoTitulo">Mercado Livre — produtos</span>
+                <span class="janela__ctrl"><i></i><i></i><i></i></span>
+              </div>
+              <div class="como__telas">
+                <img class="como__tela is-ativa" src="img/app/plataforma.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async" data-titulo="Mercado Livre — produtos">
+                <img class="como__tela" src="img/app/produto-preco.webp" alt="" width="1600" height="1111" loading="lazy" decoding="async" data-titulo="Ficha do produto">
+                <img class="como__tela" src="img/app/registro-vendas.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async" data-titulo="Registro de Vendas">
+                <img class="como__tela" src="img/app/financeiro.webp" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-titulo="DRE e Controle Financeiro">
+              </div>
+            </div>
+            <div class="como__trilho"><span id="comoTrilho"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FEITO PARA A SUA ROTINA + VÍDEO ═══════════ -->
+    <section class="demo" id="demo">
+
+      <!-- BLOCO 1: "Feito para a sua rotina" -->
+      <div class="wrap adapt">
+        <div class="adapt__head rv">
+          <p class="rotulo">Feito para a sua rotina</p>
+          <h2 class="adapt__title">O Bapell se adapta ao seu negócio.</h2>
+          <p class="adapt__sub">
+            Organize, personalize e configure o sistema da maneira que fizer
+            sentido para a sua operação — sem depender de ninguém.
+          </p>
+        </div>
+
+        <div class="adapt__grid">
+          <article class="adapt__card rv-pop" style="--d:0ms">
+            <div class="adapt__mock" aria-hidden="true">
+              <div class="ad-panel ad-panel--reorder">
+                <span class="ad-tag">Menu lateral</span>
+                <div class="ad-list">
+                  <div class="ad-row r1"><span class="ad-grip"></span><span class="ad-ico i-primary"></span><span class="ad-bar"></span></div>
+                  <div class="ad-row r2"><span class="ad-grip"></span><span class="ad-ico i-gold"></span><span class="ad-bar"></span></div>
+                  <div class="ad-row r3"><span class="ad-grip"></span><span class="ad-ico i-mint"></span><span class="ad-bar"></span></div>
+                  <div class="ad-row r4"><span class="ad-grip"></span><span class="ad-ico i-soft"></span><span class="ad-bar"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="adapt__txt">
+              <h3>Módulos do seu jeito</h3>
+              <p>Reorganize os módulos e deixe as ferramentas que você mais usa exatamente onde a sua mão procura.</p>
+            </div>
+          </article>
+
+          <article class="adapt__card rv-pop" style="--d:110ms">
+            <div class="adapt__mock" aria-hidden="true">
+              <div class="ad-panel ad-panel--fields">
+                <span class="ad-tag">Cadastro</span>
+                <div class="ad-field"><span class="ad-lbl"></span><span class="ad-inp"></span></div>
+                <div class="ad-field"><span class="ad-lbl"></span><span class="ad-inp"></span></div>
+                <div class="ad-field ad-field--new">
+                  <span class="ad-lbl ad-lbl--type"></span><span class="ad-inp"></span>
+                </div>
+                <div class="ad-add"><span class="ad-plus"></span><span class="ad-addtxt"></span></div>
+              </div>
+            </div>
+            <div class="adapt__txt">
+              <h3>Campos personalizados</h3>
+              <p>Crie campos seus — texto, ou valores em R$ e % que entram no cálculo — e renomeie ou oculte os campos padrão em cada loja.</p>
+            </div>
+          </article>
+
+          <article class="adapt__card rv-pop" style="--d:220ms">
+            <div class="adapt__mock" aria-hidden="true">
+              <div class="ad-panel ad-panel--hide">
+                <span class="ad-tag">Na sua tela</span>
+                <span class="ad-chip">2 ocultos</span>
+                <div class="ad-list">
+                  <div class="ad-row o1"><span class="ad-ico i-primary"></span><span class="ad-bar"></span></div>
+                  <div class="ad-row o2"><span class="ad-ico i-soft"></span><span class="ad-bar"></span></div>
+                  <div class="ad-row o3"><span class="ad-ico i-mint"></span><span class="ad-bar"></span></div>
+                  <div class="ad-row o4"><span class="ad-ico i-soft"></span><span class="ad-bar"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="adapt__txt">
+              <h3>Sua operação, sua configuração</h3>
+              <p>Oculte o que não utiliza, organize o que importa e deixe na tela só aquilo que faz parte do seu dia.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="adapt__bridge rv">
+          <span class="adapt__bridge-line"></span>
+          <p>Veja na prática como você pode deixar o Bapell com a <strong>sua cara</strong>.</p>
+        </div>
+      </div>
+
+      <!-- BLOCO 2: Player de Vídeo -->
+      <div class="wrap demo__sticky">
+        <div class="demo__intro rv">
+          <p class="rotulo rotulo--vivo"><span class="status-indicator"></span> Demonstração</p>
+          <h2>Veja o aplicativo em uso</h2>
+          <p>Ele começa sozinho em velocidade 2×. Ajuste a velocidade ou ative o som quando quiser.</p>
+        </div>
+
+        <div class="demo__frame rv-pop" id="demoFrame">
+          <div class="demo__screen" id="demoScreen">
+            <video id="featureVideo" muted loop playsinline webkit-playsinline preload="metadata" poster="capa-do-video.png">
+              <source src="videos/seu-video.mp4" type="video/mp4">
+            </video>
+
+            <button class="demo__play" id="demoPlay" type="button" aria-label="Reproduzir vídeo">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+            </button>
+
+            <!-- Botão de Som (Esquerda) -->
+            <button class="demo__float-btn demo__float-btn--left sound-btn is-muted" id="soundBtn" type="button" aria-pressed="false" aria-label="Alternar som">
+              <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+              <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </button>
+
+            <!-- Velocidade (Centro) -->
+            <div class="demo__speed-float" id="speedGroup">
+              <button class="speed-btn" data-speed="1" type="button">1×</button>
+              <button class="speed-btn" data-speed="1.5" type="button">1.5×</button>
+              <button class="speed-btn is-active" data-speed="2" type="button">2×</button>
+            </div>
+
+            <!-- Botão de Tela Cheia (Direita) -->
+            <button class="demo__float-btn demo__float-btn--right" id="demoFullscreen" type="button" aria-label="Tela cheia">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ MÓDULOS ═══════════ -->
+    <section class="modules" id="modulos">
+      <div class="wrap">
+        <div class="modules__cabeca">
+          <div class="sec-head sec-head--esq rv">
+            <p class="rotulo">Módulos</p>
+            <h2>Conheça cada módulo por dentro.</h2>
+            <p class="sec-head__p">Clique em um módulo para ver o que ele faz, para quem serve, os principais recursos e como
+              ele funciona dentro do Bapell. Os marcados como <span class="selo selo--plus">Plus</span> estão nos planos Pro e
+              Platinum.</p>
+          </div>
+
+          <div class="mod-filters rv" role="group" aria-label="Filtrar módulos">
+            <button class="mod-filter is-active" data-filter="all" type="button">Todos</button>
+            <button class="mod-filter" data-filter="precificacao" type="button">Precificação</button>
+            <button class="mod-filter" data-filter="operacao" type="button">Operação</button>
+            <button class="mod-filter" data-filter="gestao" type="button">Gestão</button>
+            <button class="mod-filter" data-filter="ferramentas" type="button">Ferramentas</button>
+            <button class="mod-filter" data-filter="sistema" type="button">Sistema</button>
+            <button class="mod-filter mod-filter--plus" data-filter="plus" type="button">Módulos Plus</button>
+          </div>
+        </div>
+
+        <!-- Os cartões são montados pelo script.js a partir da lista MODULOS.
+             Sem JavaScript, a lista abaixo continua legível. -->
+        <div class="features-grid" id="featuresGrid">
+          <noscript>
+            <ul class="mod-noscript">
+              <li>Plataformas</li><li>Produtos e precificação</li><li>Kits e produtos compostos</li><li>Preços Extras</li>
+              <li>Ações em Massa</li><li>Registro de Vendas</li><li>Informações de Venda (Plus)</li><li>Dados da Empresa</li>
+              <li>Controle Financeiro</li><li>Processador de Planilha (Plus)</li><li>Central de Cálculos</li>
+              <li>Gerador de EAN (Plus)</li><li>Lembretes</li><li>Notas Fiscais</li><li>Usuários e Senhas</li>
+              <li>Central de Ajuda e tutoriais</li><li>Abas e personalização</li>
+            </ul>
+          </noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PROCESSADOR DE PLANILHA ═══════════ -->
+    <section class="planilhas" id="planilhas">
+      <div class="wrap">
+        <div class="planilhas__topo">
+          <div class="sec-head sec-head--esq rv">
+            <p class="rotulo"><span class="selo selo--plus">Plus</span> Módulo dos planos Pro e Platinum</p>
+            <h2>O relatório da plataforma vira número de verdade.</h2>
+            <p class="sec-head__p">
+              O marketplace entrega uma planilha com centenas de linhas. O Processador de Planilha lê esse arquivo,
+              liga cada SKU ao produto cadastrado e responde a pergunta que importa: <strong>quanto sobrou para você</strong>
+              depois das taxas e do custo dos produtos.
+            </p>
+          </div>
+          <figure class="janela planilhas__janela rv-right" style="--d:120ms">
+            <div class="janela__barra"><span class="janela__titulo">Resultado da importação</span><span class="janela__ctrl"><i></i><i></i><i></i></span></div>
+            <img src="img/app/processador-resultado-p.webp" srcset="img/app/processador-resultado-p.webp 760w, img/app/processador-resultado.webp 1600w"
+              sizes="(max-width: 900px) 92vw, 560px"
+              alt="Janela Resultado da importação: você vendeu, a plataforma pagou, custo total dos produtos e sobrou para você, com o relatório por SKU"
+              width="760" height="528" loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <!-- A conta, do jeito que aparece no aplicativo: quatro números, para
+             quem confere ver de onde o resultado saiu. -->
+        <div class="plan-conta rv">
+          <div class="plan-conta__item">
+            <span class="plan-conta__rot">Você vendeu</span>
+            <span class="plan-conta__val" data-conta="9862.31">R$ 9.862,31</span>
+            <span class="plan-conta__nota">o total antes de qualquer desconto</span>
+          </div>
+          <div class="plan-conta__item">
+            <span class="plan-conta__rot">A plataforma pagou</span>
+            <span class="plan-conta__val" data-conta="8041.24">R$ 8.041,24</span>
+            <span class="plan-conta__nota">depois das taxas da plataforma</span>
+          </div>
+          <div class="plan-conta__item">
+            <span class="plan-conta__rot">Custo total dos produtos</span>
+            <span class="plan-conta__val plan-conta__val--custo" data-conta="3957.35">R$ 3.957,35</span>
+            <span class="plan-conta__nota">pelo custo cadastrado de cada SKU</span>
+          </div>
+          <div class="plan-conta__item plan-conta__item--final">
+            <span class="plan-conta__rot">Sobrou para você</span>
+            <span class="plan-conta__val" data-conta="3884.89">R$ 3.884,89</span>
+            <span class="plan-conta__nota">depois das taxas, do custo e das suas regras</span>
+          </div>
+        </div>
+        <p class="plan-conta__legenda rv">Valores de exemplo, de uma importação com dados de demonstração. Neste exemplo, uma regra tira R$ 199,00 de mensalidade da conta do total.</p>
+
+        <!-- O fluxo: etapas reais da tela -->
+        <div class="fluxo rv">
+          <h3 class="fluxo__tit">Como o arquivo vira resultado</h3>
+          <ol class="fluxo__lista">
+            <li><span class="fluxo__n">1</span><div><strong>Empresa e plataforma</strong><p>A plataforma define em quais produtos cada SKU é procurado.</p></div></li>
+            <li><span class="fluxo__n">2</span><div><strong>Planilha de vendas</strong><p>O relatório da plataforma, em .xlsx, .xls ou .csv. Ele só é lido: nada da planilha fica guardado.</p></div></li>
+            <li><span class="fluxo__n">3</span><div><strong>Intervalos das colunas</strong><p>SKU, valor bruto, unidades e de onde vem o valor recebido. O Bapell sugere pelos títulos e você confere.</p></div></li>
+            <li><span class="fluxo__n">4</span><div><strong>Processamento</strong><p>Cada SKU é ligado ao produto para trazer o custo. SKU sem cadastro aparece marcado.</p></div></li>
+            <li><span class="fluxo__n">5</span><div><strong>Totais e regras</strong><p>Os valores são somados por SKU e no geral; as suas regras entram sobre os totais.</p></div></li>
+            <li><span class="fluxo__n">6</span><div><strong>Resultado</strong><p>A conta à vista e o relatório por SKU, com o antes e o depois das regras.</p></div></li>
+            <li><span class="fluxo__n">7</span><div><strong>Importações salvas</strong><p>Os totais e o detalhe por SKU ficam guardados para consultar e exportar depois.</p></div></li>
+            <li><span class="fluxo__n">8</span><div><strong>Financeiro</strong><p>Você escolhe qual valor lançar e quem lança; o lançamento entra no Controle Financeiro.</p></div></li>
+          </ol>
+        </div>
+
+        <div class="pl-duo">
+          <!-- As regras. O ponto delicado: elas agem sobre os TOTAIS. -->
+          <div class="pl-card rv">
+            <h3>Regras que você mesmo cria</h3>
+            <p>
+              Em Personalização dos Cálculos, cada regra escolhe <strong>o total que muda</strong>, <strong>a operação</strong>
+              e <strong>o valor usado</strong>:
+            </p>
+            <ul class="pl-ops">
+              <li>Somar</li><li>Subtrair</li><li>Multiplicar</li><li>Dividir</li><li>Substituir</li>
+            </ul>
+            <p>
+              O valor pode ser um número que você informa (em R$, % ou número), o total de uma coluna da planilha, outro
+              total já calculado ou o resultado de uma regra anterior — dá para encadear.
+            </p>
+            <p class="pl-card__nota">
+              As regras trabalham sempre sobre os <strong>totais</strong>, nunca linha a linha.
+              Tirar R$ 200 de mensalidade é tirar R$ 200 do total importado — e não de cada uma das vendas.
+            </p>
+          </div>
+
+          <!-- A exportação: três valores, porque cada operação lança de um jeito. -->
+          <div class="pl-card rv" style="--d:100ms">
+            <h3>Você escolhe o que vai para o financeiro</h3>
+            <p>
+              Na hora de exportar, o Bapell mostra os três valores da importação e você decide
+              qual será lançado no Controle Financeiro:
+            </p>
+            <ul class="pl-esc">
+              <li><strong>Você vendeu</strong><span>o total antes de qualquer desconto</span></li>
+              <li><strong>A plataforma pagou</strong><span>depois das taxas da plataforma</span></li>
+              <li><strong>Sobrou para você</strong><span>depois das taxas e do custo dos produtos</span></li>
+            </ul>
+            <p class="pl-card__nota">
+              Salve a importação e ela fica em Importações Salvas. Dali você exporta quando quiser, sem reimportar a
+              planilha — e vê quantas vezes ela já foi exportada. Em Meus Impostos, uma estimativa do imposto pelas
+              importações salvas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ ANTES → DEPOIS ═══════════ -->
+    <section class="antes" id="antes">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="rotulo">A diferença na prática</p>
+          <h2>De seis lugares para um só.</h2>
+        </div>
+
+        <div class="ad-duo rv">
+          <div class="ad-col ad-col--antes">
+            <span class="ad-col__tag">Sem o Bapell</span>
+            <ul class="ad-col__lista">
+              <li>Planilha de custos</li>
+              <li>Site da plataforma, para conferir a comissão</li>
+              <li>Calculadora do celular, para o preço</li>
+              <li>Outra planilha, para os kits</li>
+              <li>Relatório do marketplace, sem somar</li>
+              <li>Caderno ou app de despesas</li>
+            </ul>
+            <p class="ad-col__nota">Seis lugares, nenhum conversa com o outro.</p>
+          </div>
+
+          <div class="ad-seta" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+
+          <div class="ad-col ad-col--depois">
+            <span class="ad-col__tag ad-col__tag--on">Com o Bapell</span>
+            <ol class="ad-col__fluxo">
+              <li><span>Produtos</span> cadastrados uma vez, com custo real</li>
+              <li><span>Precificação</span> por plataforma, com as suas taxas</li>
+              <li><span>Vendas</span> registradas por você, num só lugar</li>
+              <li><span>Planilhas</span> somadas pelo Processador (Pro e Platinum)</li>
+              <li><span>Financeiro</span> com os lançamentos que você faz ou exporta</li>
+            </ol>
+            <p class="ad-col__nota">Um programa só, com os seus números.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PLANOS / COMPRA ═══════════ -->
+    <section class="pricing" id="planos">
+      <div class="pricing__bg"></div>
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="rotulo">Escolha sua licença</p>
+          <h2>Quatro planos. Duas decisões.</h2>
+          <p class="pricing__explain">
+            Primeiro o <strong>prazo</strong>: a <strong>Licença Anual</strong> vale 365 dias e é renovável; a
+            <strong>Vitalícia</strong> é pagamento único, sem mensalidade, para a versão adquirida. Depois, se você quer os
+            <strong>módulos Plus</strong> — Processador de Planilha, Informações de Venda e Gerador de EAN —, que estão no
+            <strong>Pro</strong> e no <strong>Platinum</strong>. Em todos, o aplicativo roda no seu computador e os dados
+            ficam com você.
+          </p>
+        </div>
+
+        <!-- Alternância do prazo. Sem JavaScript, os quatro planos aparecem. -->
+        <div class="prazo rv" id="prazo" role="radiogroup" aria-label="Prazo da licença">
+          <button class="prazo__op is-ativo" type="button" role="radio" aria-checked="true" data-prazo="anual">Anual <small>365 dias</small></button>
+          <button class="prazo__op" type="button" role="radio" aria-checked="false" data-prazo="vitalicia">Vitalícia <small>pagamento único</small></button>
+          <span class="prazo__pilula" aria-hidden="true"></span>
+        </div>
+
+        <div class="plans plans--4" id="plans" data-prazo="anual">
+
+          <article class="plan rv-pop" data-prazo="anual" style="--d:0ms">
+            <p class="plan__familia">Sem os módulos Plus</p>
+            <h3 class="plan__name">Licença Anual</h3>
+            <p class="plan__tagline">Comece pagando menos. Vale 365 dias e pode ser renovada.</p>
+            <div class="plan__price">
+              <span class="cur">R$</span>
+              <span class="val" data-preco="419">419</span><span class="cents">,00</span>
+              <span class="per">/ ano</span>
+            </div>
+            <p class="plan__note">365 dias, contados da emissão da chave · renovável</p>
+            <ul class="plan__list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Todos os módulos, exceto os módulos Plus</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 365 dias de utilização</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Atualizações inclusas</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Suporte durante a validade</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Menor investimento inicial</li>
+            </ul>
+            <div class="plan__buy">
+              <span class="plan__pay-label">Comprar pelo</span>
+              <a class="btn btn--wa" data-plan="anual" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Gostaria+de+comprar+a+*Licen%C3%A7a+Anual*+do+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12a11.9 11.9 0 0 0 1.6 6L0 24l6.2-1.6A11.9 11.9 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5zM12 22a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 1 1 12 22zm5.5-7.4c-.3-.2-1.8-.9-2-1s-.5-.2-.7.1-.8 1-1 1.2-.4.2-.7 0a8.1 8.1 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.4 3.4 0 0 0-1.1 2.6 6 6 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.7.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.2-.5-.4z"></path></svg><span>WhatsApp (Pix)</span>
+              </a>
+              <a class="btn btn--eduzz" data-plan="anual" href="https://eduzz.com/SEUPRODUTO" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg><span>Eduzz (Cartão / Boleto)</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="plan plan--pro rv-pop" data-prazo="anual" style="--d:90ms">
+            <p class="plan__familia plan__familia--plus">Com os módulos Plus</p>
+            <h3 class="plan__name">Pro</h3>
+            <p class="plan__tagline">A licença anual com os três módulos Plus incluídos.</p>
+            <div class="plan__price">
+              <span class="cur">R$</span>
+              <span class="val" data-preco="599.9">599</span><span class="cents">,90</span>
+              <span class="per">/ ano</span>
+            </div>
+            <p class="plan__note">365 dias, contados da emissão da chave · renovável</p>
+            <ul class="plan__list">
+              <li class="plan__plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Processador de Planilha</strong></li>
+              <li class="plan__plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Informações de Venda</strong></li>
+              <li class="plan__plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Gerador de EAN</strong></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Todos os demais módulos atuais</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 365 dias · atualizações inclusas</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Suporte durante a validade</li>
+            </ul>
+            <div class="plan__buy">
+              <span class="plan__pay-label">Comprar pelo</span>
+              <a class="btn btn--wa" data-plan="anual-planilhas" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Gostaria+de+comprar+o+plano+*Pro*+do+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12a11.9 11.9 0 0 0 1.6 6L0 24l6.2-1.6A11.9 11.9 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5zM12 22a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 1 1 12 22zm5.5-7.4c-.3-.2-1.8-.9-2-1s-.5-.2-.7.1-.8 1-1 1.2-.4.2-.7 0a8.1 8.1 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.4 3.4 0 0 0-1.1 2.6 6 6 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.7.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.2-.5-.4z"></path></svg><span>WhatsApp (Pix)</span>
+              </a>
+              <a class="btn btn--eduzz" data-plan="anual-planilhas" href="https://eduzz.com/SEUPRODUTO" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg><span>Eduzz (Cartão / Boleto)</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="plan rv-pop" data-prazo="vitalicia" style="--d:180ms">
+            <p class="plan__familia">Sem os módulos Plus</p>
+            <h3 class="plan__name">Licença Vitalícia</h3>
+            <p class="plan__tagline">Pague uma vez e use sem prazo de validade, na versão adquirida.</p>
+            <div class="plan__price">
+              <span class="cur">R$</span>
+              <span class="val" data-preco="997">997</span><span class="cents">,00</span>
+              <span class="per">único</span>
+            </div>
+            <p class="plan__note">Pagamento único · uso permanente da versão adquirida</p>
+            <ul class="plan__list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Todos os módulos, exceto os módulos Plus</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Uso permanente, em 1 computador</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Atualizações da versão adquirida</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Paga uma vez, usa sempre</li>
+            </ul>
+            <div class="plan__buy">
+              <span class="plan__pay-label">Comprar pelo</span>
+              <a class="btn btn--wa" data-plan="vitalicia" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Gostaria+de+comprar+a+*Licen%C3%A7a+Vital%C3%ADcia*+do+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12a11.9 11.9 0 0 0 1.6 6L0 24l6.2-1.6A11.9 11.9 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5zM12 22a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 1 1 12 22zm5.5-7.4c-.3-.2-1.8-.9-2-1s-.5-.2-.7.1-.8 1-1 1.2-.4.2-.7 0a8.1 8.1 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.4 3.4 0 0 0-1.1 2.6 6 6 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.7.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.2-.5-.4z"></path></svg><span>WhatsApp (Pix)</span>
+              </a>
+              <a class="btn btn--eduzz" data-plan="vitalicia" href="https://eduzz.com/SEUPRODUTO" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg><span>Eduzz (Cartão / Boleto)</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="plan plan--pro plan--top rv-pop" data-prazo="vitalicia" style="--d:270ms">
+            <span class="plan__flag">Mais completo</span>
+            <p class="plan__familia plan__familia--plus">Com os módulos Plus</p>
+            <h3 class="plan__name">Platinum</h3>
+            <p class="plan__tagline">Vitalícia, com os módulos Plus disponíveis hoje.</p>
+            <div class="plan__price">
+              <span class="cur">R$</span>
+              <span class="val" data-preco="1249.9">1.249</span><span class="cents">,90</span>
+              <span class="per">único</span>
+            </div>
+            <p class="plan__note">Pagamento único · uso permanente da versão adquirida</p>
+            <ul class="plan__list">
+              <li class="plan__plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Processador de Planilha</strong></li>
+              <li class="plan__plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Informações de Venda</strong></li>
+              <li class="plan__plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Gerador de EAN</strong></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Todos os demais módulos atuais</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Uso permanente, em 1 computador</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Atualizações da versão adquirida · sem mensalidade</li>
+            </ul>
+            <div class="plan__buy">
+              <span class="plan__pay-label">Comprar pelo</span>
+              <a class="btn btn--wa" data-plan="vitalicia-planilhas" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Gostaria+de+comprar+o+plano+*Platinum*+do+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12a11.9 11.9 0 0 0 1.6 6L0 24l6.2-1.6A11.9 11.9 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5zM12 22a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 1 1 12 22zm5.5-7.4c-.3-.2-1.8-.9-2-1s-.5-.2-.7.1-.8 1-1 1.2-.4.2-.7 0a8.1 8.1 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.4 3.4 0 0 0-1.1 2.6 6 6 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.7.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.2-.5-.4z"></path></svg><span>WhatsApp (Pix)</span>
+              </a>
+              <a class="btn btn--eduzz" data-plan="vitalicia-planilhas" href="https://eduzz.com/SEUPRODUTO" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg><span>Eduzz (Cartão / Boleto)</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Aviso que os Termos de Uso (cláusula 51.3) pedem em destaque na
+             página de venda. O texto é o mesmo do aplicativo. -->
+        <aside class="aviso-planos rv" role="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="11" x2="12" y2="16"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <p><strong>Importante:</strong> nem todo plano inclui todos os módulos. A Licença Vitalícia e o Platinum valem
+            para a versão adquirida: versões futuras do sistema e novos módulos vendidos separadamente não estão incluídos
+            automaticamente. As condições completas estão nos Termos de Uso, que você lê e aceita na ativação.</p>
+        </aside>
+
+        <!-- Comparação completa. No celular, mostra os dois planos do prazo
+             escolhido acima. -->
+        <div class="cmp rv" id="cmp" data-prazo="anual">
+          <h3 class="cmp__tit">O que cada plano inclui</h3>
+          <p class="cmp__sub" id="cmpSub">No celular, a tabela mostra os planos do prazo escolhido acima.</p>
+          <div class="cmp__wrap">
+            <table class="cmp__tab">
+              <thead>
+                <tr>
+                  <th scope="col">Recurso</th>
+                  <th scope="col" data-col="anual">Licença Anual</th>
+                  <th scope="col" class="cmp__pro" data-col="anual">Pro</th>
+                  <th scope="col" data-col="vitalicia">Licença Vitalícia</th>
+                  <th scope="col" class="cmp__pro" data-col="vitalicia">Platinum</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="cmp__info">
+                  <th scope="row">Preço</th>
+                  <td data-col="anual">R$ 419,00 / ano</td>
+                  <td data-col="anual" class="cmp__pro">R$ 599,90 / ano</td>
+                  <td data-col="vitalicia">R$ 997,00 único</td>
+                  <td data-col="vitalicia" class="cmp__pro">R$ 1.249,90 único</td>
+                </tr>
+                <tr class="cmp__info">
+                  <th scope="row">Prazo</th>
+                  <td data-col="anual">365 dias</td>
+                  <td data-col="anual" class="cmp__pro">365 dias</td>
+                  <td data-col="vitalicia">Sem prazo de validade</td>
+                  <td data-col="vitalicia" class="cmp__pro">Sem prazo de validade</td>
+                </tr>
+                <tr class="cmp__info">
+                  <th scope="row">Atualizações</th>
+                  <td data-col="anual">Inclusas</td>
+                  <td data-col="anual" class="cmp__pro">Inclusas</td>
+                  <td data-col="vitalicia">Da versão adquirida</td>
+                  <td data-col="vitalicia" class="cmp__pro">Da versão adquirida</td>
+                </tr>
+                <tr class="cmp__grupo"><th scope="rowgroup" colspan="5">Incluídos em todos os planos</th></tr>
+                <tr><th scope="row">Plataformas, produtos e precificação</th><td data-col="anual"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="anual" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td></tr>
+                <tr><th scope="row">Kits, produtos compostos e Preços Extras</th><td data-col="anual"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="anual" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td></tr>
+                <tr><th scope="row">Ações em Massa</th><td data-col="anual"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="anual" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td></tr>
+                <tr><th scope="row">Registro de Vendas</th><td data-col="anual"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="anual" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td></tr>
+                <tr><th scope="row">Dados da Empresa e Controle Financeiro</th><td data-col="anual"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="anual" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td></tr>
+                <tr><th scope="row">Central de Cálculos, Lembretes e Notas Fiscais</th><td data-col="anual"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="anual" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td></tr>
+                <tr><th scope="row">Usuários e Senhas</th><td data-col="anual"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="anual" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td></tr>
+                <tr><th scope="row">Central de Ajuda, tutoriais e backup</th><td data-col="anual"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="anual" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><i class="ok" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia" class="cmp__pro"><i class="ok" role="img" aria-label="Incluso"></i></td></tr>
+                <tr class="cmp__grupo cmp__grupo--plus"><th scope="rowgroup" colspan="5">Módulos Plus</th></tr>
+                <tr class="cmp__dif"><th scope="row">Processador de Planilha</th><td data-col="anual"><span class="cmp__nao" role="img" aria-label="Não incluso">—</span></td><td data-col="anual" class="cmp__pro"><i class="ok ok--plus" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><span class="cmp__nao" role="img" aria-label="Não incluso">—</span></td><td data-col="vitalicia" class="cmp__pro"><i class="ok ok--plus" role="img" aria-label="Incluso"></i></td></tr>
+                <tr class="cmp__dif"><th scope="row">Informações de Venda</th><td data-col="anual"><span class="cmp__nao" role="img" aria-label="Não incluso">—</span></td><td data-col="anual" class="cmp__pro"><i class="ok ok--plus" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><span class="cmp__nao" role="img" aria-label="Não incluso">—</span></td><td data-col="vitalicia" class="cmp__pro"><i class="ok ok--plus" role="img" aria-label="Incluso"></i></td></tr>
+                <tr class="cmp__dif"><th scope="row">Gerador de EAN</th><td data-col="anual"><span class="cmp__nao" role="img" aria-label="Não incluso">—</span></td><td data-col="anual" class="cmp__pro"><i class="ok ok--plus" role="img" aria-label="Incluso"></i></td><td data-col="vitalicia"><span class="cmp__nao" role="img" aria-label="Não incluso">—</span></td><td data-col="vitalicia" class="cmp__pro"><i class="ok ok--plus" role="img" aria-label="Incluso"></i></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="cmp__nota">
+            Licença Anual e Licença Vitalícia têm os mesmos módulos; Pro e Platinum também. Entre anual e vitalícia mudam o
+            prazo e as condições de atualização. A diferença de conteúdo são os módulos Plus.
+          </p>
+        </div>
+
+        <!-- Caminho para quem ainda não está pronto para comprar. Aponta para o
+             MESMO WhatsApp das compras: é como a chave de teste é entregue. -->
+        <div class="teste rv">
+          <div>
+            <h3>Quer experimentar antes?</h3>
+            <p>A chave de teste vale 7 dias corridos, contados da emissão, com todos os módulos — inclusive os Plus.</p>
+          </div>
+          <a class="btn btn--ghost" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Gostaria+de+testar+o+*Bapell+Gestor+Pro*+por+7+dias&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">
+            <span>Pedir chave de teste</span>
+          </a>
+        </div>
+
+        <!-- Como a licença chega: o mesmo caminho descrito no app e nos Termos -->
+        <div class="licenca rv">
+          <h3 class="licenca__tit">Como a sua licença chega</h3>
+          <ol class="licenca__passos">
+            <li><span class="licenca__n">1</span><p>Escolha o plano e faça o pagamento.</p></li>
+            <li><span class="licenca__n">2</span><p>No Bapell instalado, a tela de ativação mostra o <strong>ID do Computador</strong> e o <strong>Código de Solicitação</strong>. Eles vão no pedido da chave.</p></li>
+            <li><span class="licenca__n">3</span><p>A chave chega por e-mail, vinculada ao seu computador.</p></li>
+            <li><span class="licenca__n">4</span><p>Cole a chave e clique em Ativar. Para renovar ou mudar de plano, é só inserir a chave nova — sem reinstalar e sem perder dados.</p></li>
+          </ol>
+        </div>
+
+        <div class="pricing__trust rv">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Seus dados no seu PC</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Suporte por e-mail e WhatsApp</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Teste de 7 dias</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PERGUNTAS FREQUENTES ═══════════ -->
+    <section class="faq" id="faq">
+      <div class="wrap faq__grid">
+        <div class="faq__cabeca rv">
+          <p class="rotulo">Antes de decidir</p>
+          <h2>Perguntas que todo mundo faz.</h2>
+          <p class="sec-head__p">Ficou alguma dúvida que não está aqui? Fale com a gente.</p>
+          <a class="btn btn--ghost" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Tenho+uma+d%C3%BAvida+sobre+o+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">
+            <span>Perguntar no WhatsApp</span>
+          </a>
+        </div>
+
+        <!-- <details> nativo: abre e fecha sem JavaScript, funciona com teclado
+             e leitor de tela. O script só anima a altura. -->
+        <div class="faq__lista rv">
+          <details class="faq__item">
+            <summary>O Bapell funciona sem internet?</summary>
+            <div class="faq__resp"><p>Funciona. Ele é um programa que roda no seu computador, com Windows, e não depende de conexão para calcular preços, cadastrar produtos ou lançar vendas. A licença também é conferida no próprio computador. Você usa a internet só para pedir a chave, recebê-la por e-mail e falar com o suporte.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Como funciona a licença?</summary>
+            <div class="faq__resp"><p>Você recebe uma chave de ativação vinculada ao seu computador. A Licença Anual e o Pro valem 365 dias, contados da emissão da chave, e podem ser renovados — a renovação antecipada não soma os dias que faltavam. A Licença Vitalícia e o Platinum não vencem e valem para a versão adquirida. O aplicativo mostra o plano e a validade na Central de Ajuda.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>O que são os módulos Plus?</summary>
+            <div class="faq__resp"><p>São três módulos que estão só nos planos <strong>Pro</strong> e <strong>Platinum</strong>: Processador de Planilha, Informações de Venda e Gerador de EAN. A Licença Anual e a Licença Vitalícia têm todos os outros módulos, sem os Plus. Fora do plano, eles continuam aparecendo no menu com um sinal de "+" e explicam em quais planos estão.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>O que é o Processador de Planilha?</summary>
+            <div class="faq__resp"><p>É o módulo que lê o relatório de vendas que a plataforma te entrega e calcula quanto você vendeu, quanto a plataforma pagou, o custo total dos produtos e quanto sobrou. Você pode criar regras próprias sobre esses totais e exportar o resultado para o Controle Financeiro. Os valores são uma conferência gerencial, não uma apuração contábil.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Posso testar antes de comprar?</summary>
+            <div class="faq__resp"><p>Pode. A chave de teste vale 7 dias corridos, contados da emissão, com todos os módulos, inclusive os Plus. Com o Bapell instalado, envie pelo WhatsApp o ID do Computador e o Código de Solicitação que aparecem na tela de ativação. O teste é liberado a critério do Bapell e pode ser limitado a um por computador.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Posso mudar de plano depois?</summary>
+            <div class="faq__resp"><p>Pode. Da Licença Anual dá para ir para a Vitalícia, o Pro ou o Platinum; do Pro ou da Vitalícia, para o Platinum. A troca é feita com uma chave nova, inserida em Central de Ajuda › Alterar minha chave, sem reinstalar e sem perder dados. As condições do upgrade são as informadas no momento da contratação.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>O que acontece quando a licença anual vence?</summary>
+            <div class="faq__resp"><p>O Bapell avisa antes do vencimento e cria um lembrete na agenda. Depois que vence, os módulos ficam bloqueados até você inserir uma chave nova, mas os seus dados continuam salvos no computador. A Central de Ajuda (com o backup), as Notas Fiscais e Usuários e Senhas continuam abertos.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>E se eu trocar de computador?</summary>
+            <div class="faq__resp"><p>A chave só funciona no computador para o qual foi emitida. Para trocar de computador, peça a transferência pelos canais oficiais: uma nova chave é emitida para o novo computador, nas condições informadas, e o anterior deixa de usar o programa. Trocar peças, como a placa-mãe, também pode exigir nova chave. Seus dados podem ser levados pelo backup do próprio aplicativo.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Quais marketplaces o Bapell atende?</summary>
+            <div class="faq__resp"><p>Você mesmo cadastra as plataformas em que vende — Mercado Livre, Shopee, Amazon, Magalu, loja física ou outras — e informa as taxas de cada produto. O Bapell não se conecta às plataformas: as taxas não se atualizam sozinhas. No Mercado Livre, o preço dos anúncios Premium e Clássico é calculado lado a lado.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>O Bapell emite nota fiscal?</summary>
+            <div class="faq__resp"><p>Não. O módulo Notas Fiscais guarda e organiza os arquivos das notas (PDF, XML ou imagem) de cada empresa, com número, emitente e responsável, para você encontrar depois. Ele não emite, não transmite à SEFAZ e não tem validade fiscal.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Como faço backup dos meus dados?</summary>
+            <div class="faq__resp"><p>Pela Central de Ajuda, em Backup e Transferência de Dados: você exporta os dados para um arquivo e importa em outro computador. O backup é manual e fica com você — não é automático nem fica na nuvem. Guarde o arquivo em local seguro, porque ele não tem senha.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Posso desistir da compra?</summary>
+            <div class="faq__resp"><p>Pode. Na compra feita fora de loja física, você tem 7 dias para desistir, como prevê o artigo 49 do Código de Defesa do Consumidor. Peça pelo e-mail ou pelo WhatsApp oficiais: os valores são devolvidos na forma da lei e a licença é cancelada.</p></div>
+          </details>
+
+          <details class="faq__item">
+            <summary>Como recebo suporte?</summary>
+            <div class="faq__resp"><p>Pelos canais oficiais: e-mail <a href="mailto:bapellgestorpro@gmail.com">bapellgestorpro@gmail.com</a> e WhatsApp (41) 98899-5503, por ordem de chegada. Na Licença Anual e no Pro, o suporte vale durante a validade. O aplicativo também tem uma Central de Ajuda, com tutoriais interativos que mostram cada tela passo a passo.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ CHAMADA FINAL ═══════════ -->
+    <section class="final" id="comecar">
+      <div class="wrap final__caixa rv-pop">
+        <h2>Saiba por quanto vender antes do próximo anúncio.</h2>
+        <p>Escolha seu plano ou comece pelo teste de 7 dias, com todos os módulos.</p>
+        <div class="final__acoes">
+          <a class="btn btn--primary btn--lg btn--brilho" href="#planos"><span>Ver planos e comprar</span></a>
+          <a class="btn btn--ghost btn--lg" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Gostaria+de+testar+o+*Bapell+Gestor+Pro*+por+7+dias&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener"><span>Pedir chave de teste</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__top">
+        <div class="footer__about">
+          <a class="brand brand--sm" href="#topo" aria-label="Bapell Gestor Pro — início">
+            <span class="brand__logo"><img src="icon.png" alt="" class="brand__icon-img" width="18" height="18"></span>
+            <span class="brand__name">Bapell <strong>Gestor Pro</strong></span>
+          </a>
+          <p>Programa para Windows de precificação e gestão para quem vende em marketplace. Funciona sem internet.
+            Licença Anual, Licença Vitalícia, Pro e Platinum — seus dados ficam no seu computador.</p>
+        </div>
+
+        <div class="footer__col">
+          <h4>Produto</h4>
+          <ul>
+            <li><a href="#como-funciona">Como funciona</a></li>
+            <li><a href="#demo">Ver em uso</a></li>
+            <li><a href="#modulos">Módulos</a></li>
+            <li><a href="#planilhas">Processador de Planilha</a></li>
+            <li><a href="#planos">Planos e preços</a></li>
+            <li><a href="#faq">Perguntas frequentes</a></li>
+          </ul>
+        </div>
+
+        <!-- Confiança: o que a pessoa precisa saber antes de pagar por Pix.
+             Só fatos que já valem no produto e nos Termos. -->
+        <div class="footer__col">
+          <h4>Como funciona</h4>
+          <ul class="footer__fatos">
+            <li>Programa para Windows, instalado no seu PC</li>
+            <li>Licença por computador, ativada por chave</li>
+            <li>Atualizações da versão adquirida sem custo extra</li>
+            <li>Suporte por e-mail e WhatsApp</li>
+            <li>Teste de 7 dias antes de comprar</li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4>Contato</h4>
+          <ul>
+            <li><a href="https://api.whatsapp.com/send/?phone=5541988995503&text=Ol%C3%A1%21+Tenho+uma+d%C3%BAvida+sobre+o+*Bapell+Gestor+Pro*&type=phone_number&app_absent=0" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="mailto:bapellgestorpro@gmail.com">bapellgestorpro@gmail.com</a></li>
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfGM9faBL2HKo36xwmcUzV4k9IMj0uxCa2nnj2jQNZ3iaWsFA/viewform" target="_blank" rel="noopener">Falar com a gente</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Bapell Gestor Pro. Todos os direitos reservados.</p>
+        <p class="footer__copy">As telas exibidas usam dados de demonstração.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Barra de compra no celular: aparece depois do topo e some nos planos -->
+  <div class="barra-compra" id="barraCompra" aria-hidden="true">
+    <a class="btn btn--primary" href="#planos" tabindex="-1">Ver planos</a>
+    <a class="btn btn--wa barra-compra__wa" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Tenho+uma+d%C3%BAvida+sobre+o+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener" tabindex="-1" aria-label="Falar no WhatsApp">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12a11.9 11.9 0 0 0 1.6 6L0 24l6.2-1.6A11.9 11.9 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5zM12 22a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 1 1 12 22zm5.5-7.4c-.3-.2-1.8-.9-2-1s-.5-.2-.7.1-.8 1-1 1.2-.4.2-.7 0a8.1 8.1 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.4 3.4 0 0 0-1.1 2.6 6 6 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.7.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.2-.5-.4z"></path></svg>
+    </a>
+  </div>
+
+  <!-- Apresentação de um módulo (montada pelo script.js) -->
+  <div class="mod-modal" id="modModal" hidden>
+    <div class="mod-modal__fundo" data-fechar></div>
+    <div class="mod-modal__painel" role="dialog" aria-modal="true" aria-labelledby="modTitulo" tabindex="-1" id="modPainel">
+      <div class="mod-modal__topo">
+        <div class="mod-modal__trilha" id="modTrilha"></div>
+        <button class="mod-modal__fechar" type="button" data-fechar aria-label="Fechar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="mod-modal__rolagem" id="modRolagem">
+        <div class="mod-modal__conteudo" id="modConteudo"></div>
+      </div>
+      <div class="mod-modal__rodape">
+        <button class="mod-nav" type="button" id="modAnterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg><span>Anterior</span></button>
+        <span class="mod-modal__pos" id="modPos"></span>
+        <button class="mod-nav mod-nav--prox" type="button" id="modProximo"><span>Próximo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ampliação de uma tela (dentro da apresentação do módulo) -->
+  <div class="zoom" id="zoom" hidden>
+    <button class="zoom__fechar" type="button" aria-label="Fechar imagem ampliada">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+    </button>
+    <img id="zoomImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>
