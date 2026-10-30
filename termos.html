@@ -1,15 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0F1A2B" />
+  <meta name="theme-color" content="#121826" />
   <title>Termos de Uso — Bapell Gestor Pro</title>
   <meta name="description" content="Termos de Uso, Licença de Software e Condições Gerais do Bapell Gestor Pro (versão 5.0): planos, módulos, chave de ativação, computadores, dados, Central de Acessos, garantias e LGPD." />
   <link rel="icon" type="image/png" href="icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
+  <!-- O mesmo tema escolhido no site (Claro, Padrão ou Dark Absoluto) -->
+  <script>
+    (function () {
+      var t = "dark";
+      try { t = localStorage.getItem("bapell_site_tema") || "dark"; } catch (e) {}
+      if (t !== "light" && t !== "dark" && t !== "midnight") t = "dark";
+      document.documentElement.setAttribute("data-theme", t);
+      var cor = document.querySelector('meta[name="theme-color"]');
+      if (cor) cor.setAttribute("content", { light: "#F4F6FA", dark: "#121826", midnight: "#000000" }[t]);
+    })();
+  </script>
+  <!-- As fontes do próprio Bapell (Sora nos títulos e DM Sans no texto) ficam na pasta fonts/. -->
+  <link rel="preload" as="font" type="font/woff2" href="fonts/sora-latin-700-normal.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="fonts/dm-sans-latin-400-normal.woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -23,6 +34,11 @@
         <span>Bapell <b>Gestor Pro</b></span>
       </a>
       <a class="btn btn--linha termos__voltar" href="index.html">Voltar ao site</a>
+      <div class="tema" role="group" aria-label="Tema da página">
+        <button type="button" class="tema__btn tema__btn--claro" data-tema="light" aria-pressed="false" title="Tema Claro"><span class="sr">Claro</span></button>
+        <button type="button" class="tema__btn tema__btn--padrao" data-tema="dark" aria-pressed="true" title="Tema Padrão (escuro)"><span class="sr">Padrão</span></button>
+        <button type="button" class="tema__btn tema__btn--absoluto" data-tema="midnight" aria-pressed="false" title="Tema Dark Absoluto"><span class="sr">Dark Absoluto</span></button>
+      </div>
       <a class="btn btn--azul termos__planos" href="index.html#planos">Ver planos</a>
     </div>
   </header>
@@ -3338,6 +3354,20 @@
       if (indice) indice.addEventListener("click", function (e) {
         if (e.target.closest("a") && celular.matches) indice.removeAttribute("open");
       });
+      // Tema: os mesmos três do site e do app
+      var cores = { light: "#F4F6FA", dark: "#121826", midnight: "#000000" };
+      var meta = document.querySelector('meta[name="theme-color"]');
+      var botoes = document.querySelectorAll("[data-tema]");
+      function aplicar(t, salvar) {
+        if (!cores[t]) t = "dark";
+        document.documentElement.setAttribute("data-theme", t);
+        for (var i = 0; i < botoes.length; i++) botoes[i].setAttribute("aria-pressed", String(botoes[i].getAttribute("data-tema") === t));
+        if (meta) meta.setAttribute("content", cores[t]);
+        if (salvar) { try { localStorage.setItem("bapell_site_tema", t); } catch (e) {} }
+      }
+      aplicar(document.documentElement.getAttribute("data-theme"), false);
+      for (var j = 0; j < botoes.length; j++) botoes[j].addEventListener("click", function () { aplicar(this.getAttribute("data-tema"), true); });
+      window.addEventListener("storage", function (e) { if (e.key === "bapell_site_tema" && e.newValue) aplicar(e.newValue, false); });
     })();
   </script>
 </body>

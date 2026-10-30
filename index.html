@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0F1A2B" />
+  <meta name="theme-color" content="#121826" />
   <title>Bapell Gestor Pro — preço certo e gestão para quem vende em marketplace</title>
   <meta name="description" content="Programa para Windows que calcula o preço de venda de cada produto em cada plataforma — com custo, comissão, frete, impostos e margem — e organiza vendas, devoluções, financeiro e a equipe. Funciona sem internet e vale para 2 computadores." />
   <meta property="og:type" content="website" />
@@ -12,12 +12,24 @@
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:image" content="img/app/painel.webp" />
   <link rel="icon" type="image/png" href="icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="img/app/produto-preco-p.webp" />
+  <!-- O tema escolhido (Claro, Padrão ou Dark Absoluto) vale antes de a página
+       aparecer: sem piscar a cor errada. Padrão = o tema escuro do Bapell. -->
+  <script>
+    (function () {
+      var t = "dark";
+      try { t = localStorage.getItem("bapell_site_tema") || "dark"; } catch (e) {}
+      if (t !== "light" && t !== "dark" && t !== "midnight") t = "dark";
+      document.documentElement.setAttribute("data-theme", t);
+      var cor = document.querySelector('meta[name="theme-color"]');
+      if (cor) cor.setAttribute("content", { light: "#F4F6FA", dark: "#121826", midnight: "#000000" }[t]);
+      document.documentElement.classList.add("js");
+    })();
+  </script>
+  <!-- As fontes do próprio Bapell (Sora nos títulos e DM Sans no texto) ficam na pasta fonts/. -->
+  <link rel="preload" as="font" type="font/woff2" href="fonts/sora-latin-700-normal.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="fonts/dm-sans-latin-400-normal.woff2" crossorigin />
+  <link rel="preload" as="image" href="img/app/painel.webp" imagesrcset="img/app/painel-p.webp 760w, img/app/painel.webp 1600w" imagesizes="(max-width: 1060px) 92vw, 660px" />
   <link rel="stylesheet" href="styles.css" />
-  <script>document.documentElement.classList.add("js");</script>
 </head>
 
 <body id="topo">
@@ -31,24 +43,38 @@
         <span>Bapell <b>Gestor Pro</b></span>
       </a>
       <nav class="nav__links" aria-label="Principal">
+        <a href="#simulador">Simulador</a>
         <a href="#como-funciona">Como funciona</a>
-        <a href="#equipe">Equipe e computadores</a>
         <a href="#modulos">Módulos</a>
+        <a href="#equipe">Equipe</a>
         <a href="#planos">Planos</a>
         <a href="#faq">Dúvidas</a>
       </nav>
+      <div class="tema" role="group" aria-label="Tema do site">
+        <span class="tema__rot">Tema</span>
+        <button type="button" class="tema__btn tema__btn--claro" data-tema="light" aria-pressed="false" title="Tema Claro"><span class="sr">Claro</span></button>
+        <button type="button" class="tema__btn tema__btn--padrao" data-tema="dark" aria-pressed="true" title="Tema Padrão (escuro)"><span class="sr">Padrão</span></button>
+        <button type="button" class="tema__btn tema__btn--absoluto" data-tema="midnight" aria-pressed="false" title="Tema Dark Absoluto"><span class="sr">Dark Absoluto</span></button>
+      </div>
       <a class="btn btn--azul nav__cta" href="#planos">Ver planos</a>
       <button class="nav__menu" id="navMenu" type="button" aria-expanded="false" aria-controls="menuMobile" aria-label="Abrir o menu">
         <span></span><span></span>
       </button>
     </div>
     <div class="menu-mobile" id="menuMobile" hidden>
+      <a href="#simulador">Simulador de preço</a>
       <a href="#como-funciona">Como funciona</a>
-      <a href="#equipe">Equipe e computadores</a>
       <a href="#modulos">Módulos</a>
       <a href="#plus">Módulos Plus</a>
+      <a href="#equipe">Equipe e computadores</a>
       <a href="#planos">Planos e preços</a>
       <a href="#faq">Dúvidas</a>
+      <div class="tema tema--menu" role="group" aria-label="Tema do site">
+        <span class="tema__rot">Tema</span>
+        <button type="button" class="tema__btn tema__btn--claro" data-tema="light" aria-pressed="false">Claro</button>
+        <button type="button" class="tema__btn tema__btn--padrao" data-tema="dark" aria-pressed="true">Padrão</button>
+        <button type="button" class="tema__btn tema__btn--absoluto" data-tema="midnight" aria-pressed="false">Dark Absoluto</button>
+      </div>
       <a class="btn btn--azul" href="#planos">Ver planos e comprar</a>
     </div>
   </header>
@@ -61,6 +87,18 @@
         <div class="topo__texto">
           <p class="topo__para">Para quem vende no Mercado Livre, na Shopee, na Amazon, na Magalu e na loja física</p>
           <h1 id="topoTitulo">Saiba por quanto vender <em>antes</em> de anunciar.</h1>
+        </div>
+
+        <!-- A tela do Painel do Bapell, numa janela com a barra de abas do app -->
+        <figure class="topo__tela janela" aria-hidden="true">
+          <div class="janela__abas">
+            <span class="janela__aba"><img class="janela__aba-ico" src="icon.png" alt="" width="14" height="14" />Painel<i>×</i></span>
+            <span class="janela__mais">+</span>
+          </div>
+          <img width="1600" height="1000" src="img/app/painel.webp" srcset="img/app/painel-p.webp 760w, img/app/painel.webp 1600w" sizes="(max-width: 1060px) 92vw, 660px" alt="" fetchpriority="high" decoding="async" />
+        </figure>
+
+        <div class="topo__resto">
           <p class="topo__sub">
             O Bapell Gestor Pro calcula o preço de cada produto em cada plataforma — com custo, comissão,
             frete, impostos e a margem que você quer — e organiza o resto da operação: vendas, devoluções,
@@ -76,60 +114,73 @@
             <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="9" height="7" rx="1.5"/><rect x="13" y="14" width="9" height="7" rx="1.5"/><path d="M6.5 10v4.5a1.5 1.5 0 0 0 1.5 1.5h5"/></svg>Licença para 2 computadores</li>
           </ul>
         </div>
+      </div>
+    </section>
 
-        <div class="topo__palco">
-          <figure class="janela topo__janela" aria-hidden="true">
+    <!-- ═══════════════ SIMULADOR (a etiqueta) ═══════════════ -->
+    <section class="secao simulador" id="simulador" aria-labelledby="simH">
+      <div class="in simulador__in">
+        <div class="simulador__texto">
+          <h2 id="simH">Faça a conta do jeito que o Bapell faz.</h2>
+          <p class="simulador__sub">Mexa no frete, na taxa fixa, na comissão, no imposto e na margem: o preço de venda e o lucro mudam na hora, com a mesma conta da ficha do produto — inclusive a regra da taxa fixa, que só entra quando o preço fica até R$ 79,00.</p>
+          <ul class="checks">
+            <li>O preço já desconta comissão, imposto da nota e frete</li>
+            <li>A barra mostra para onde vai cada real do preço</li>
+            <li>O custo do produto fica fixo em R$ 289,91 no exemplo</li>
+          </ul>
+          <figure class="janela simulador__janela" aria-hidden="true">
             <div class="janela__barra"><i></i><i></i><i></i><span>Garrafa Térmica Inox 1L — Mercado Livre</span></div>
-            <img width="760" height="528" src="img/app/produto-preco-p.webp" alt="" fetchpriority="high" />
+            <img width="760" height="528" src="img/app/produto-preco-p.webp" alt="" loading="lazy" decoding="async" />
           </figure>
+        </div>
 
-          <!-- A etiqueta: a mesma conta da ficha do produto, resumida. O custo padrão é o custo total
-               da garrafa na demonstração (38,90 + 2,50 + 0,40 + DIFAL 4% = 43,356); o campo mostra 43,36,
-               como o app, e a conta usa o valor exato até a pessoa alterar o campo. -->
-          <div class="etiqueta" id="etiqueta" role="group" aria-labelledby="etqTitulo">
-            <span class="fita" aria-hidden="true"></span>
-            <div class="etiqueta__cab">
-              <p class="etiqueta__marca">Bapell Gestor Pro</p>
-              <h2 id="etqTitulo">Simule o preço</h2>
-              <p class="etiqueta__prod">Garrafa Térmica Inox 1L, anúncio Premium</p>
+        <!-- A etiqueta: a mesma conta da ficha do produto, resumida. O custo do produto é fixo
+             (R$ 289,91) e não pode ser alterado: o campo é só leitura e o script sempre usa
+             esse valor. Os outros campos continuam livres. -->
+        <div class="etiqueta" id="etiqueta" role="group" aria-labelledby="etqTitulo">
+          <span class="fita" aria-hidden="true"></span>
+          <div class="etiqueta__cab">
+            <p class="etiqueta__marca"><img src="icon.png" alt="" width="16" height="16" />Bapell Gestor Pro</p>
+            <h3 id="etqTitulo">Simule o preço</h3>
+            <p class="etiqueta__prod">Garrafa Térmica Inox 1L, anúncio Premium</p>
+          </div>
+          <div class="etiqueta__campos">
+            <label class="campo"><span>Custo do produto</span><span class="campo__din campo__din--fixo" title="Valor fixo do exemplo"><i>R$</i><input id="custo" type="text" inputmode="decimal" value="289,91" readonly autocomplete="off" /><svg class="campo__cadeado" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></label>
+            <label class="campo"><span>Frete do produto</span><span class="campo__din"><i>R$</i><input id="frete" type="text" inputmode="decimal" value="21,90" autocomplete="off" /></span></label>
+            <label class="campo"><span>Taxa fixa por venda</span><span class="campo__din"><i>R$</i><input id="taxaFixa" type="text" inputmode="decimal" value="6,25" autocomplete="off" /></span></label>
+            <div class="desliza">
+              <div class="desliza__rot"><label for="comissao">Comissão da plataforma</label> <output id="comissaoOut" for="comissao">16,5%</output></div>
+              <input id="comissao" type="range" min="0" max="30" step="0.5" value="16.5" />
             </div>
-            <div class="etiqueta__campos">
-              <label class="campo"><span>Custo do produto</span><span class="campo__din"><i>R$</i><input id="custo" type="text" inputmode="decimal" value="43,36" data-exato="43.356" autocomplete="off" /></span></label>
-              <label class="campo"><span>Frete do produto</span><span class="campo__din"><i>R$</i><input id="frete" type="text" inputmode="decimal" value="21,90" autocomplete="off" /></span></label>
-              <label class="campo"><span>Taxa fixa por venda</span><span class="campo__din"><i>R$</i><input id="taxaFixa" type="text" inputmode="decimal" value="6,25" autocomplete="off" /></span></label>
-              <div class="desliza">
-                <div class="desliza__rot"><label for="comissao">Comissão da plataforma</label> <output id="comissaoOut" for="comissao">16,5%</output></div>
-                <input id="comissao" type="range" min="0" max="30" step="0.5" value="16.5" />
-              </div>
-              <div class="desliza">
-                <div class="desliza__rot"><label for="imposto">Imposto da nota</label> <output id="impostoOut" for="imposto">6%</output></div>
-                <input id="imposto" type="range" min="0" max="25" step="0.5" value="6" />
-              </div>
-              <div class="desliza">
-                <div class="desliza__rot"><label for="margem">Margem que você quer</label> <output id="margemOut" for="margem">18%</output></div>
-                <input id="margem" type="range" min="0" max="60" step="0.5" value="18" />
-              </div>
+            <div class="desliza">
+              <div class="desliza__rot"><label for="imposto">Imposto da nota</label> <output id="impostoOut" for="imposto">6%</output></div>
+              <input id="imposto" type="range" min="0" max="25" step="0.5" value="6" />
             </div>
-            <div class="etiqueta__picote" aria-hidden="true"></div>
-            <div class="etiqueta__res" aria-live="polite">
-              <div>
-                <p class="etiqueta__rot">Preço de venda</p>
-                <p class="etiqueta__preco" id="preco">R$ 109,67</p>
-              </div>
-              <div class="etiqueta__lucro">
-                <p class="etiqueta__rot">Lucro estimado</p>
-                <p><b id="lucro">R$ 19,74</b> <span id="margemReal">18% do preço</span></p>
-              </div>
-            </div>
-            <div class="barra" id="bar" role="img" aria-label="Para onde vai o preço de venda"></div>
-            <ul class="barra__legenda" id="barLegenda"></ul>
-            <p class="etiqueta__taxa" id="taxaLinha"></p>
-            <p class="etiqueta__aviso" id="warn" hidden>Comissão, imposto e margem somados não podem chegar a 100% do preço.</p>
-            <div class="etiqueta__pe">
-              <span class="codigo" aria-hidden="true"></span>
-              <p>No app, a conta inclui embalagem, etiqueta, impostos de compra, kits e o Premium e o Clássico lado a lado.</p>
+            <div class="desliza">
+              <div class="desliza__rot"><label for="margem">Margem que você quer</label> <output id="margemOut" for="margem">18%</output></div>
+              <input id="margem" type="range" min="0" max="60" step="0.5" value="18" />
             </div>
           </div>
+          <div class="etiqueta__picote" aria-hidden="true"></div>
+          <div class="etiqueta__res" aria-live="polite">
+            <div>
+              <p class="etiqueta__rot">Preço de venda</p>
+              <p class="etiqueta__preco" id="preco">R$ 524,05</p>
+            </div>
+            <div class="etiqueta__lucro">
+              <p class="etiqueta__rot">Lucro estimado</p>
+              <p><b id="lucro">R$ 94,33</b> <span id="margemReal">18% do preço</span></p>
+            </div>
+          </div>
+          <div class="barra" id="bar" role="img" aria-label="Para onde vai o preço de venda"></div>
+          <ul class="barra__legenda" id="barLegenda"></ul>
+          <p class="etiqueta__taxa" id="taxaLinha"></p>
+          <p class="etiqueta__aviso" id="warn" hidden>Comissão, imposto e margem somados não podem chegar a 100% do preço.</p>
+          <div class="etiqueta__pe">
+            <span class="codigo" aria-hidden="true"></span>
+            <p>No app, a conta inclui embalagem, etiqueta, impostos de compra, kits e o Premium e o Clássico lado a lado.</p>
+          </div>
+          <button type="button" class="etiqueta__reset" id="etqReset" hidden>Voltar aos valores do exemplo</button>
         </div>
       </div>
     </section>
@@ -141,22 +192,24 @@
           <h2 id="probTitulo">A conta certa está espalhada em seis lugares.</h2>
           <p>O custo está numa planilha. A comissão, no site da plataforma. O imposto, com o contador. O frete muda por região. E o resultado do mês só aparece quando alguém senta e soma tudo à mão.</p>
         </div>
-        <ul class="papeis">
-          <li class="papel"><b>Planilha de custos</b><span>O fornecedor reajusta e a planilha fica para trás.</span></li>
-          <li class="papel"><b>Site da plataforma</b><span>Comissão e taxa fixa conferidas anúncio por anúncio.</span></li>
-          <li class="papel"><b>Calculadora do celular</b><span>O preço sai sem o frete e sem o imposto.</span></li>
-          <li class="papel"><b>Outra planilha, para os kits</b><span>Duas, três, seis unidades: cada combinação refeita à mão.</span></li>
-          <li class="papel"><b>Relatório do marketplace</b><span>Centenas de linhas e nenhuma resposta para “sobrou quanto?”.</span></li>
-          <li class="papel"><b>Caderno das devoluções</b><span>O produto voltou, o frete foi pago e ninguém anotou o prejuízo.</span></li>
-        </ul>
-        <div class="um" id="antes">
-          <h3>No Bapell, a conta fica num lugar só.</h3>
-          <ul class="checks">
-            <li>Produtos cadastrados uma vez, com custo real e categoria</li>
-            <li>Preço por plataforma, com as suas taxas — e os kits com preço próprio</li>
-            <li>Vendas, devoluções e financeiro conversando entre si</li>
-            <li>A planilha da plataforma somada pelo Processador (Pro e Platinum)</li>
+        <div class="problema__grade">
+          <ul class="papeis">
+            <li class="papel"><b>Planilha de custos</b><span>O fornecedor reajusta e a planilha fica para trás.</span></li>
+            <li class="papel"><b>Site da plataforma</b><span>Comissão e taxa fixa conferidas anúncio por anúncio.</span></li>
+            <li class="papel"><b>Calculadora do celular</b><span>O preço sai sem o frete e sem o imposto.</span></li>
+            <li class="papel"><b>Outra planilha, para os kits</b><span>Duas, três, seis unidades: cada combinação refeita à mão.</span></li>
+            <li class="papel"><b>Relatório do marketplace</b><span>Centenas de linhas e nenhuma resposta para “sobrou quanto?”.</span></li>
+            <li class="papel"><b>Caderno das devoluções</b><span>O produto voltou, o frete foi pago e ninguém anotou o prejuízo.</span></li>
           </ul>
+          <div class="um" id="antes">
+            <h3>No Bapell, a conta fica num lugar só.</h3>
+            <ul class="checks">
+              <li>Produtos cadastrados uma vez, com custo real e categoria</li>
+              <li>Preço por plataforma, com as suas taxas — e os kits com preço próprio</li>
+              <li>Vendas, devoluções e financeiro conversando entre si</li>
+              <li>A planilha da plataforma somada pelo Processador (Pro e Platinum)</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -212,91 +265,40 @@
               <div class="janela__barra"><i></i><i></i><i></i><span id="comoTitulo">Mercado Livre — produtos</span></div>
               <img width="1600" height="1000" id="comoTela" src="img/app/plataforma.webp" alt="" decoding="async" />
             </figure>
+            <div class="como__pontos" id="comoPontos"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════ EQUIPE E COMPUTADORES ═══════════════ -->
-    <section class="secao equipe" id="equipe" aria-labelledby="eqH">
-      <div class="in">
-        <div class="cab cab--claro">
-          <h2 id="eqH">Para a equipe toda, sem perder o controle.</h2>
-          <p>Dois computadores com os mesmos dados, cada pessoa com o próprio acesso e um registro do que foi feito. Está em todos os planos.</p>
-        </div>
-
-        <div class="equipe__grade">
-          <article class="bloco bloco--rede">
-            <h3>Dois computadores na mesma licença</h3>
-            <p>Um computador é o principal: guarda os dados e atende o outro pela rede local, de forma cifrada e sem internet. O segundo é ativado com uma chave que o próprio principal gera.</p>
-            <svg class="rede" viewBox="0 0 360 170" role="img" aria-labelledby="redeT">
-              <title id="redeT">O computador principal guarda os dados e atende o secundário pela rede local; computadores adicionais se conectam do mesmo jeito.</title>
-              <g class="rede__pc rede__pc--pri">
-                <rect x="14" y="30" width="118" height="78" rx="8"/>
-                <rect x="26" y="42" width="94" height="44" rx="3" class="rede__tela"/>
-                <path d="M50 108v12h46v-12" class="rede__pe"/>
-                <ellipse cx="73" cy="58" rx="16" ry="5" class="rede__db"/><path d="M57 58v14c0 3 7 5 16 5s16-2 16-5V58" class="rede__db"/>
-                <text x="73" y="140">Principal</text><text x="73" y="156" class="rede__sub">guarda os dados</text>
-              </g>
-              <g class="rede__pc">
-                <rect x="228" y="30" width="118" height="78" rx="8"/>
-                <rect x="240" y="42" width="94" height="44" rx="3" class="rede__tela"/>
-                <path d="M264 108v12h46v-12" class="rede__pe"/>
-                <text x="287" y="140">Secundário</text><text x="287" y="156" class="rede__sub">mesmos números</text>
-              </g>
-              <path d="M136 69h88" class="rede__fio"/>
-              <circle cx="180" cy="69" r="13" class="rede__cadeado"/>
-              <path d="M175 69v-3a5 5 0 0 1 10 0v3M174 69h12v7h-12z" class="rede__cad"/>
-              <text x="180" y="22" class="rede__sub">rede local cifrada</text>
-            </svg>
-            <ul class="checks checks--claro">
-              <li>Os dois trabalham ao mesmo tempo; um registro alterado nos dois vai para Conflitos, sem perda</li>
-              <li>Sem conexão com o principal, o outro fica só para consulta</li>
-              <li>Backups automáticos do banco no principal</li>
-              <li>Do 3º computador em diante: <b>R$ 300,00</b> por computador</li>
-            </ul>
-          </article>
-
-          <article class="bloco bloco--acessos">
-            <h3>Cada pessoa com o próprio acesso</h3>
-            <p>Na Central de Acessos, só o Administrador entra. Ali ficam os colaboradores, os módulos e os botões protegidos e o registro do que cada um fez.</p>
-            <div class="abas-eq" role="tablist" aria-label="Telas da Central de Acessos">
-              <button type="button" role="tab" aria-selected="true" tabindex="0" aria-controls="equipeQuadro" data-tela-eq="seguranca-usuarios" data-alt="Colaboradores com login, senha própria e permissões" data-legenda="Colaboradores com login, senha própria e permissões por módulo.">Colaboradores</button>
-              <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="equipeQuadro" data-tela-eq="seguranca-modulos" data-alt="Módulos protegidos com quem pode entrar em cada um" data-legenda="12 módulos que podem pedir senha, cada um com quem pode entrar.">Módulos protegidos</button>
-              <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="equipeQuadro" data-tela-eq="seguranca-logs" data-alt="Registro de Logs com usuário, computador, módulo e resultado" data-legenda="Registro de Logs: quem, quando, em qual computador e o que mudou, nos últimos 9 dias.">Registro de Logs</button>
-            </div>
-            <div class="quadro" id="equipeQuadro" role="tabpanel">
-              <button type="button" class="quadro__amp" data-ampliar aria-label="Ampliar a tela">
-                <img width="760" height="507" id="equipeTela" src="img/app/seguranca-usuarios-p.webp" alt="Colaboradores com login, senha própria e permissões" loading="lazy" decoding="async" />
-              </button>
-              <p class="quadro__leg" id="equipeLegenda">Colaboradores com login, senha própria e permissões por módulo.</p>
-            </div>
-            <ul class="checks checks--claro">
-              <li>Botões como salvar ou excluir podem pedir usuário e senha antes de agir</li>
-              <li>Os valores do Painel aparecem só nos computadores que você autorizar</li>
-              <li>Ninguém apaga o registro pela tela; senhas nunca entram nele</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- ═══════════════ VÍDEO ═══════════════ -->
+    <!-- A demonstração começa sozinha, sem som e em 2×, quando chega na tela —
+         no computador e no celular (autoplay + muted + playsinline). Fora da
+         tela, pausa. Se o navegador bloquear (economia de bateria, por exemplo),
+         aparece o botão de reproduzir e o primeiro toque na página já inicia. -->
     <section class="secao demo" id="demo" aria-labelledby="demoH">
       <div class="in">
-        <div class="cab">
+        <div class="cab cab--centro">
           <h2 id="demoH">Veja o aplicativo em uso.</h2>
           <p>Uma demonstração gravada do Bapell. Ela começa sozinha em velocidade 2×, sem som — ajuste quando quiser.</p>
         </div>
-        <div class="video" id="demoFrame">
+        <div class="video janela" id="demoFrame">
+          <div class="janela__abas" aria-hidden="true">
+            <span class="janela__aba"><img class="janela__aba-ico" src="icon.png" alt="" width="14" height="14" />Demonstração do Bapell<i>×</i></span>
+            <span class="janela__mais">+</span>
+          </div>
           <div class="video__tela" id="demoScreen">
-            <video id="featureVideo" muted loop playsinline webkit-playsinline preload="metadata" poster="capa-do-video.png">
+            <video id="featureVideo" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="capa-do-video.png">
               <source src="videos/seu-video.mp4" type="video/mp4" />
             </video>
             <button class="video__play video__ctl" id="demoPlay" type="button" aria-label="Reproduzir o vídeo">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             </button>
             <div class="video__barra video__ctl">
+              <button type="button" class="video__btn" id="pauseBtn" aria-label="Pausar o vídeo">
+                <svg class="v-pausa" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                <svg class="v-tocar" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </button>
               <button type="button" class="video__btn" id="soundBtn" aria-pressed="false" aria-label="Ativar o som">
                 <svg class="v-mudo" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                 <svg class="v-som" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
@@ -310,6 +312,7 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
               </button>
             </div>
+            <p class="video__erro" id="videoErro" hidden>Não foi possível carregar o vídeo agora.</p>
           </div>
         </div>
       </div>
@@ -422,10 +425,74 @@
       </div>
     </section>
 
+    <!-- ═══════════════ EQUIPE E COMPUTADORES ═══════════════ -->
+    <section class="secao equipe" id="equipe" aria-labelledby="eqH">
+      <div class="in">
+        <div class="cab cab--claro">
+          <h2 id="eqH">Para a equipe toda, sem perder o controle.</h2>
+          <p>Dois computadores com os mesmos dados, cada pessoa com o próprio acesso e um registro do que foi feito. Está em todos os planos.</p>
+        </div>
+
+        <div class="equipe__grade">
+          <article class="bloco bloco--rede">
+            <h3>Dois computadores na mesma licença</h3>
+            <p>Um computador é o principal: guarda os dados e atende o outro pela rede local, de forma cifrada e sem internet. O segundo é ativado com uma chave que o próprio principal gera.</p>
+            <svg class="rede" viewBox="0 0 360 170" role="img" aria-labelledby="redeT">
+              <title id="redeT">O computador principal guarda os dados e atende o secundário pela rede local; computadores adicionais se conectam do mesmo jeito.</title>
+              <g class="rede__pc rede__pc--pri">
+                <rect x="14" y="30" width="118" height="78" rx="8"/>
+                <rect x="26" y="42" width="94" height="44" rx="3" class="rede__tela"/>
+                <path d="M50 108v12h46v-12" class="rede__pe"/>
+                <ellipse cx="73" cy="58" rx="16" ry="5" class="rede__db"/><path d="M57 58v14c0 3 7 5 16 5s16-2 16-5V58" class="rede__db"/>
+                <text x="73" y="140">Principal</text><text x="73" y="156" class="rede__sub">guarda os dados</text>
+              </g>
+              <g class="rede__pc">
+                <rect x="228" y="30" width="118" height="78" rx="8"/>
+                <rect x="240" y="42" width="94" height="44" rx="3" class="rede__tela"/>
+                <path d="M264 108v12h46v-12" class="rede__pe"/>
+                <text x="287" y="140">Secundário</text><text x="287" y="156" class="rede__sub">mesmos números</text>
+              </g>
+              <path d="M136 69h88" class="rede__fio"/>
+              <circle cx="180" cy="69" r="13" class="rede__cadeado"/>
+              <path d="M175 69v-3a5 5 0 0 1 10 0v3M174 69h12v7h-12z" class="rede__cad"/>
+              <text x="180" y="22" class="rede__sub">rede local cifrada</text>
+            </svg>
+            <ul class="checks checks--claro">
+              <li>Os dois trabalham ao mesmo tempo; um registro alterado nos dois vai para Conflitos, sem perda</li>
+              <li>Sem conexão com o principal, o outro fica só para consulta</li>
+              <li>Backups automáticos do banco no principal</li>
+              <li>Do 3º computador em diante: <b>R$ 300,00</b> por computador</li>
+            </ul>
+          </article>
+
+          <article class="bloco bloco--acessos">
+            <h3>Cada pessoa com o próprio acesso</h3>
+            <p>Na Central de Acessos, só o Administrador entra. Ali ficam os colaboradores, os módulos e os botões protegidos e o registro do que cada um fez.</p>
+            <div class="abas-eq" role="tablist" aria-label="Telas da Central de Acessos">
+              <button type="button" role="tab" aria-selected="true" tabindex="0" aria-controls="equipeQuadro" data-tela-eq="seguranca-usuarios" data-alt="Colaboradores com login, senha própria e permissões" data-legenda="Colaboradores com login, senha própria e permissões por módulo.">Colaboradores</button>
+              <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="equipeQuadro" data-tela-eq="seguranca-modulos" data-alt="Módulos protegidos com quem pode entrar em cada um" data-legenda="12 módulos que podem pedir senha, cada um com quem pode entrar.">Módulos protegidos</button>
+              <button type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="equipeQuadro" data-tela-eq="seguranca-logs" data-alt="Registro de Logs com usuário, computador, módulo e resultado" data-legenda="Registro de Logs: quem, quando, em qual computador e o que mudou, nos últimos 9 dias.">Registro de Logs</button>
+            </div>
+            <div class="quadro" id="equipeQuadro" role="tabpanel">
+              <button type="button" class="quadro__amp" data-ampliar aria-label="Ampliar a tela">
+                <img width="760" height="507" id="equipeTela" src="img/app/seguranca-usuarios-p.webp" alt="Colaboradores com login, senha própria e permissões" loading="lazy" decoding="async" />
+              </button>
+              <p class="quadro__leg" id="equipeLegenda">Colaboradores com login, senha própria e permissões por módulo.</p>
+            </div>
+            <ul class="checks checks--claro">
+              <li>Botões como salvar ou excluir podem pedir usuário e senha antes de agir</li>
+              <li>Os valores do Painel aparecem só nos computadores que você autorizar</li>
+              <li>Ninguém apaga o registro pela tela; senhas nunca entram nele</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══════════════ PLANOS ═══════════════ -->
     <section class="secao planos" id="planos" aria-labelledby="planosH">
       <div class="in">
-        <div class="cab">
+        <div class="cab cab--centro">
           <h2 id="planosH">Quatro planos. Duas decisões.</h2>
           <p>Primeiro o prazo: a Licença Anual vale 365 dias e é renovável; a Vitalícia é paga uma vez, para a versão adquirida. Depois, se você quer os três módulos Plus. Em todos, o programa roda nos seus computadores, os dados ficam com você e a licença vale para 2 computadores.</p>
         </div>
@@ -436,7 +503,7 @@
         </div>
 
         <div class="planos__lista" id="plans" data-prazo="anual">
-          <article class="plano" data-prazo="anual" aria-labelledby="pAnual">
+          <article class="plano" data-prazo="anual" data-plano="anual" aria-labelledby="pAnual">
             <div class="plano__canhoto"><p>Sem os módulos Plus</p></div>
             <h3 id="pAnual">Licença Anual</h3>
             <p class="plano__desc">Comece pagando menos. Vale 365 dias e pode ser renovada.</p>
@@ -454,7 +521,7 @@
             </div>
           </article>
 
-          <article class="plano plano--plus" data-prazo="anual" aria-labelledby="pPro">
+          <article class="plano plano--plus" data-prazo="anual" data-plano="pro" aria-labelledby="pPro">
             <div class="plano__canhoto"><p>Com os módulos Plus</p></div>
             <h3 id="pPro">Pro</h3>
             <p class="plano__desc">A licença anual com os três módulos Plus.</p>
@@ -474,7 +541,7 @@
             </div>
           </article>
 
-          <article class="plano" data-prazo="vitalicia" aria-labelledby="pVit">
+          <article class="plano" data-prazo="vitalicia" data-plano="vitalicia" aria-labelledby="pVit">
             <div class="plano__canhoto"><p>Sem os módulos Plus</p></div>
             <h3 id="pVit">Licença Vitalícia</h3>
             <p class="plano__desc">Pague uma vez e use sem prazo de validade, na versão adquirida.</p>
@@ -492,7 +559,7 @@
             </div>
           </article>
 
-          <article class="plano plano--plus plano--top" data-prazo="vitalicia" aria-labelledby="pPlat">
+          <article class="plano plano--plus plano--top" data-prazo="vitalicia" data-plano="platinum" aria-labelledby="pPlat">
             <div class="plano__canhoto"><p>Com os módulos Plus</p><span class="plano__selo">Mais completo</span></div>
             <h3 id="pPlat">Platinum</h3>
             <p class="plano__desc">Vitalícia, com os módulos Plus disponíveis hoje.</p>
@@ -513,6 +580,85 @@
           </article>
         </div>
 
+        <!-- Monte o seu plano: o plano indicado e o total, com os computadores
+             adicionais; ou quanto fica a mudança de plano com o valor já pago. -->
+        <div class="montar" id="montar" aria-labelledby="montarH">
+          <div class="montar__cab">
+            <p class="cartao__tit"><span class="ponto-azul" aria-hidden="true"></span>Monte o seu plano</p>
+            <h3 id="montarH">Responda três perguntas e veja o plano indicado e o total.</h3>
+          </div>
+          <div class="montar__modos" role="tablist" aria-label="O que você quer fazer">
+            <button type="button" role="tab" id="montarAbaNovo" aria-selected="true" tabindex="0" aria-controls="montarNovo" data-modo="novo">Comprar agora</button>
+            <button type="button" role="tab" id="montarAbaUp" aria-selected="false" tabindex="-1" aria-controls="montarUp" data-modo="upgrade">Já tenho licença</button>
+          </div>
+
+          <div class="montar__corpo" id="montarNovo" role="tabpanel" aria-labelledby="montarAbaNovo">
+            <div class="montar__form" id="montarForm">
+              <fieldset class="montar__q">
+                <legend>1. Por quanto tempo?</legend>
+                <label class="opcao"><input type="radio" name="mPrazo" value="anual" checked /><span><b>Anual</b><small>365 dias, renovável</small></span></label>
+                <label class="opcao"><input type="radio" name="mPrazo" value="vitalicia" /><span><b>Vitalícia</b><small>paga uma vez</small></span></label>
+              </fieldset>
+              <fieldset class="montar__q">
+                <legend>2. Precisa dos módulos Plus?</legend>
+                <label class="opcao"><input type="radio" name="mPlus" value="nao" checked /><span><b>Não</b><small>todos os outros módulos</small></span></label>
+                <label class="opcao"><input type="radio" name="mPlus" value="sim" /><span><b>Sim</b><small>Processador, Devoluções e EAN</small></span></label>
+              </fieldset>
+              <fieldset class="montar__q">
+                <legend>3. Quantos computadores?</legend>
+                <div class="contador">
+                  <button type="button" class="contador__btn" id="mMenos" aria-label="Um computador a menos">−</button>
+                  <input type="number" id="mComps" min="1" max="50" step="1" value="2" inputmode="numeric" aria-label="Quantidade de computadores" />
+                  <button type="button" class="contador__btn" id="mMais" aria-label="Um computador a mais">+</button>
+                </div>
+                <small class="montar__dica">2 computadores já vêm na licença.</small>
+              </fieldset>
+            </div>
+            <div class="montar__res" aria-live="polite">
+              <p class="montar__rot">Plano indicado</p>
+              <p class="montar__plano" id="mPlano">Licença Anual</p>
+              <dl class="montar__conta">
+                <div><dt id="mPlanoRot">Licença Anual</dt><dd id="mPlanoVal">R$ 419,00</dd></div>
+                <div id="mExtraLinha" hidden><dt id="mExtraRot">Computadores adicionais</dt><dd id="mExtraVal">R$ 0,00</dd></div>
+                <div class="total"><dt>Total na contratação</dt><dd id="mTotal">R$ 419,00</dd></div>
+              </dl>
+              <p class="montar__nota" id="mNota">Por ano. Inclui 2 computadores.</p>
+              <div class="montar__acoes">
+                <a class="btn btn--wa" id="mComprar" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Gostaria+de+comprar+a+*Licen%C3%A7a+Anual*+do+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Pedir este plano no WhatsApp</a>
+                <a class="btn btn--linha" id="mVer" href="#plans">Ver o plano</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="montar__corpo" id="montarUp" role="tabpanel" aria-labelledby="montarAbaUp" hidden>
+            <div class="montar__form montar__form--up" id="montarUpForm">
+              <fieldset class="montar__q">
+                <legend>Seu plano hoje</legend>
+                <label class="opcao"><input type="radio" name="mAtual" value="anual" checked /><span><b>Licença Anual</b><small>R$ 419,00</small></span></label>
+                <label class="opcao"><input type="radio" name="mAtual" value="pro" /><span><b>Pro</b><small>R$ 599,90</small></span></label>
+                <label class="opcao"><input type="radio" name="mAtual" value="vitalicia" /><span><b>Licença Vitalícia</b><small>R$ 997,00</small></span></label>
+              </fieldset>
+              <fieldset class="montar__q">
+                <legend>Quer ir para</legend>
+                <div id="mDestinos" class="montar__destinos"></div>
+              </fieldset>
+            </div>
+            <div class="montar__res" aria-live="polite">
+              <p class="montar__rot">Mudança de plano</p>
+              <p class="montar__plano" id="mUpTitulo">Licença Anual → Pro</p>
+              <dl class="montar__conta">
+                <div><dt id="mUpNovoRot">Pro</dt><dd id="mUpNovo">R$ 599,90</dd></div>
+                <div class="menos"><dt>Valor já pago (preço de tabela)</dt><dd id="mUpPago">− R$ 419,00</dd></div>
+                <div class="total"><dt>Você paga a diferença</dt><dd id="mUpTotal">R$ 180,90</dd></div>
+              </dl>
+              <p class="montar__nota">Com a licença ativa. Licença vencida e período de teste não geram desconto. É uma estimativa com os preços de tabela: vale o valor confirmado na contratação.</p>
+              <div class="montar__acoes">
+                <a class="btn btn--wa" id="mUpPedir" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Pedir a mudança no WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="extras">
           <div class="extra">
             <h3>2 computadores em cada licença</h3>
@@ -522,6 +668,7 @@
           <div class="extra">
             <h3>Upgrade com o que você já pagou</h3>
             <p>Da Licença Anual para a Vitalícia, o Pro ou o Platinum; do Pro ou da Vitalícia para o Platinum. Com a licença ativa, o valor pago é descontado do preço do novo plano.</p>
+            <a href="#montar" data-montar-upgrade>Calcular a diferença</a>
           </div>
           <div class="extra">
             <h3>Teste de 7 dias</h3>
@@ -583,71 +730,79 @@
           <p>Ficou alguma dúvida que não está aqui? Fale com a gente.</p>
           <a class="btn btn--wa" href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Tenho+uma+d%C3%BAvida+sobre+o+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Perguntar no WhatsApp</a>
         </div>
-        <div class="faq__lista">
-          <details>
-            <summary>O Bapell funciona sem internet?</summary>
-            <p>Funciona. É um programa que roda no seu computador com Windows e não depende de conexão para calcular preços, cadastrar produtos ou lançar vendas. A licença também é conferida no próprio computador, e os dois computadores da rede local conversam pela rede da empresa, sem internet. Você usa a internet só para pedir a chave, recebê-la por e-mail e falar com o suporte.</p>
-          </details>
-          <details>
-            <summary>Como funciona a licença?</summary>
-            <p>Você recebe uma chave de ativação vinculada ao seu computador principal. A Licença Anual e o Pro valem 365 dias, contados da emissão da chave, e podem ser renovados — a renovação antecipada não soma os dias que faltavam. A Licença Vitalícia e o Platinum não vencem e valem para a versão adquirida. O plano e a validade aparecem na Central de Ajuda.</p>
-          </details>
-          <details>
-            <summary>Posso usar em mais de um computador?</summary>
-            <p>Pode. Cada licença vale para 2 computadores: o principal, que guarda os dados, e um secundário, ativado com uma chave gerada no próprio principal. Os dois usam os mesmos dados pela rede local, ao mesmo tempo. Do terceiro computador em diante, cada um custa R$ 300,00 e é liberado por um código que a Bapell envia. O principal precisa ficar ligado com o Bapell aberto.</p>
-          </details>
-          <details>
-            <summary>O que são os módulos Plus?</summary>
-            <p>São três módulos que estão só nos planos Pro e Platinum: o Processador de Planilha, o Gestor de Devoluções e o Gerador de EAN. A Licença Anual e a Licença Vitalícia têm todos os outros módulos — inclusive as Informações de Venda. Fora do plano, os Plus continuam no menu com um sinal de “+” e explicam em quais planos estão.</p>
-          </details>
-          <details>
-            <summary>O que o Gestor de Devoluções calcula?</summary>
-            <p>O imposto da devolução, com a porcentagem de imposto por nota da empresa, e o prejuízo: o imposto mais o que você pagou a mais, como o frete de retorno. Se a plataforma reembolsou, o prejuízo é só esse valor extra. Os cartões mostram o total devolvido, os produtos que mais voltam, a loja com mais devoluções, o prejuízo e os reembolsos. Os valores são estimativas gerenciais, com os dados que você informa.</p>
-          </details>
-          <details>
-            <summary>Posso dar acesso a funcionários sem passar a minha senha?</summary>
-            <p>Pode. Na Central de Acessos, cada colaborador tem login e senha própria e só abre os módulos que você permitir. Botões como salvar ou excluir podem pedir usuário e senha, e o Registro de Logs mostra quem fez o quê nos últimos 9 dias. As senhas controlam o acesso pelas telas do Bapell; elas não criptografam os arquivos do computador.</p>
-          </details>
-          <details>
-            <summary>O que é o Processador de Planilha?</summary>
-            <p>É o módulo que lê o relatório de vendas que a plataforma te entrega e calcula quanto você vendeu, quanto a plataforma pagou, o custo total dos produtos e quanto sobrou. Você pode criar regras próprias sobre esses totais e exportar o resultado para o Controle Financeiro. Os valores são uma conferência gerencial, não uma apuração contábil.</p>
-          </details>
-          <details>
-            <summary>Posso testar antes de comprar?</summary>
-            <p>Pode. A chave de teste vale 7 dias corridos, contados da emissão, com todos os módulos, inclusive os Plus. Com o Bapell instalado, envie pelo WhatsApp o ID do Computador e o Código de Solicitação da tela de ativação. O teste é liberado a critério do Bapell e pode ser limitado a um por computador.</p>
-          </details>
-          <details>
-            <summary>Posso mudar de plano depois?</summary>
-            <p>Pode. Da Licença Anual dá para ir para a Vitalícia, o Pro ou o Platinum; do Pro ou da Vitalícia, para o Platinum. Com a licença ativa, o valor que você pagou é descontado do preço do novo plano — o Bapell mostra o valor em Central de Ajuda › Alterar minha chave. Licença vencida e período de teste não geram desconto. A troca é feita com uma chave nova, sem reinstalar e sem perder dados. Vale o valor confirmado na contratação.</p>
-          </details>
-          <details>
-            <summary>O que acontece quando a licença anual vence?</summary>
-            <p>O Bapell avisa antes do vencimento. Depois que vence, os módulos ficam bloqueados até você inserir uma chave nova, mas os seus dados continuam salvos. A tela inicial, a Central de Ajuda (com o backup), as Notas Fiscais e a Central de Acessos continuam abertas.</p>
-          </details>
-          <details>
-            <summary>E se eu trocar de computador?</summary>
-            <p>A chave só funciona no computador para o qual foi emitida. Para trocar o computador principal, peça a transferência pelos canais oficiais: uma nova chave é emitida para o novo computador, nas condições informadas, e o anterior deixa de usar o programa. Trocar peças, como a placa-mãe, também pode exigir nova chave. Os dados vão pelo backup do próprio aplicativo. Para trocar o computador secundário, basta revogar o antigo e gerar a chave do novo.</p>
-          </details>
-          <details>
-            <summary>Quais marketplaces o Bapell atende?</summary>
-            <p>Você mesmo cadastra as plataformas em que vende — Mercado Livre, Shopee, Amazon, Magalu, loja física ou outras — e informa as taxas de cada produto. O Bapell não se conecta às plataformas: as taxas não se atualizam sozinhas. No Mercado Livre, o preço dos anúncios Premium e Clássico é calculado lado a lado.</p>
-          </details>
-          <details>
-            <summary>O Bapell emite nota fiscal?</summary>
-            <p>Não. O módulo Notas Fiscais guarda e organiza os arquivos das notas (PDF, XML ou imagem) de cada empresa, com número, emitente e responsável, para você encontrar depois. Ele não emite, não transmite à SEFAZ e não tem validade fiscal.</p>
-          </details>
-          <details>
-            <summary>Como faço backup dos meus dados?</summary>
-            <p>Pela Central de Ajuda, em Backup e Transferência de Dados: você exporta os dados para um arquivo — com as fotos dos produtos, ele sai em .zip — e importa em outro computador, escolhendo o que restaurar. O backup é manual e fica com você: não é automático nem vai para a nuvem, e o arquivo não tem senha. Na rede local, o computador principal também faz cópias automáticas do banco de dados.</p>
-          </details>
-          <details>
-            <summary>Posso desistir da compra?</summary>
-            <p>Pode. Na compra feita fora de loja física, você tem 7 dias para desistir, como prevê o artigo 49 do Código de Defesa do Consumidor. Peça pelo e-mail ou pelo WhatsApp oficiais: os valores são devolvidos na forma da lei e a licença é cancelada.</p>
-          </details>
-          <details>
-            <summary>Como recebo suporte?</summary>
-            <p>Pelos canais oficiais: e-mail <a href="mailto:bapellgestorpro@gmail.com">bapellgestorpro@gmail.com</a> e WhatsApp (41) 98899-5503, por ordem de chegada. Na Licença Anual e no Pro, o suporte vale durante a validade. O aplicativo também tem uma Central de Ajuda, com 16 tutoriais interativos que mostram cada tela passo a passo.</p>
-          </details>
+        <div class="faq__corpo">
+          <div class="faq__busca">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="faqBusca" placeholder="Buscar nas dúvidas: licença, backup, devolução…" aria-label="Buscar nas dúvidas" autocomplete="off" />
+            <span class="faq__qtd" id="faqQtd" aria-live="polite"></span>
+          </div>
+          <p class="faq__vazio" id="faqVazio" hidden>Nenhuma pergunta com esse termo. <a href="https://api.whatsapp.com/send/?phone=5541988995503&amp;text=Ol%C3%A1%21+Tenho+uma+d%C3%BAvida+sobre+o+*Bapell+Gestor+Pro*&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Pergunte no WhatsApp</a>.</p>
+          <div class="faq__lista">
+            <details>
+              <summary>O Bapell funciona sem internet?</summary>
+              <p>Funciona. É um programa que roda no seu computador com Windows e não depende de conexão para calcular preços, cadastrar produtos ou lançar vendas. A licença também é conferida no próprio computador, e os dois computadores da rede local conversam pela rede da empresa, sem internet. Você usa a internet só para pedir a chave, recebê-la por e-mail e falar com o suporte.</p>
+            </details>
+            <details>
+              <summary>Como funciona a licença?</summary>
+              <p>Você recebe uma chave de ativação vinculada ao seu computador principal. A Licença Anual e o Pro valem 365 dias, contados da emissão da chave, e podem ser renovados — a renovação antecipada não soma os dias que faltavam. A Licença Vitalícia e o Platinum não vencem e valem para a versão adquirida. O plano e a validade aparecem na Central de Ajuda.</p>
+            </details>
+            <details>
+              <summary>Posso usar em mais de um computador?</summary>
+              <p>Pode. Cada licença vale para 2 computadores: o principal, que guarda os dados, e um secundário, ativado com uma chave gerada no próprio principal. Os dois usam os mesmos dados pela rede local, ao mesmo tempo. Do terceiro computador em diante, cada um custa R$ 300,00 e é liberado por um código que a Bapell envia. O principal precisa ficar ligado com o Bapell aberto.</p>
+            </details>
+            <details>
+              <summary>O que são os módulos Plus?</summary>
+              <p>São três módulos que estão só nos planos Pro e Platinum: o Processador de Planilha, o Gestor de Devoluções e o Gerador de EAN. A Licença Anual e a Licença Vitalícia têm todos os outros módulos — inclusive as Informações de Venda. Fora do plano, os Plus continuam no menu com um sinal de “+” e explicam em quais planos estão.</p>
+            </details>
+            <details>
+              <summary>O que o Gestor de Devoluções calcula?</summary>
+              <p>O imposto da devolução, com a porcentagem de imposto por nota da empresa, e o prejuízo: o imposto mais o que você pagou a mais, como o frete de retorno. Se a plataforma reembolsou, o prejuízo é só esse valor extra. Os cartões mostram o total devolvido, os produtos que mais voltam, a loja com mais devoluções, o prejuízo e os reembolsos. Os valores são estimativas gerenciais, com os dados que você informa.</p>
+            </details>
+            <details>
+              <summary>Posso dar acesso a funcionários sem passar a minha senha?</summary>
+              <p>Pode. Na Central de Acessos, cada colaborador tem login e senha própria e só abre os módulos que você permitir. Botões como salvar ou excluir podem pedir usuário e senha, e o Registro de Logs mostra quem fez o quê nos últimos 9 dias. As senhas controlam o acesso pelas telas do Bapell; elas não criptografam os arquivos do computador.</p>
+            </details>
+            <details>
+              <summary>O que é o Processador de Planilha?</summary>
+              <p>É o módulo que lê o relatório de vendas que a plataforma te entrega e calcula quanto você vendeu, quanto a plataforma pagou, o custo total dos produtos e quanto sobrou. Você pode criar regras próprias sobre esses totais e exportar o resultado para o Controle Financeiro. Os valores são uma conferência gerencial, não uma apuração contábil.</p>
+            </details>
+            <details>
+              <summary>Posso testar antes de comprar?</summary>
+              <p>Pode. A chave de teste vale 7 dias corridos, contados da emissão, com todos os módulos, inclusive os Plus. Com o Bapell instalado, envie pelo WhatsApp o ID do Computador e o Código de Solicitação da tela de ativação. O teste é liberado a critério do Bapell e pode ser limitado a um por computador.</p>
+            </details>
+            <details>
+              <summary>Posso mudar de plano depois?</summary>
+              <p>Pode. Da Licença Anual dá para ir para a Vitalícia, o Pro ou o Platinum; do Pro ou da Vitalícia, para o Platinum. Com a licença ativa, o valor que você pagou é descontado do preço do novo plano — o Bapell mostra o valor em Central de Ajuda › Alterar minha chave. Licença vencida e período de teste não geram desconto. A troca é feita com uma chave nova, sem reinstalar e sem perder dados. Vale o valor confirmado na contratação.</p>
+            </details>
+            <details>
+              <summary>O que acontece quando a licença anual vence?</summary>
+              <p>O Bapell avisa antes do vencimento. Depois que vence, os módulos ficam bloqueados até você inserir uma chave nova, mas os seus dados continuam salvos. A tela inicial, a Central de Ajuda (com o backup), as Notas Fiscais e a Central de Acessos continuam abertas.</p>
+            </details>
+            <details>
+              <summary>E se eu trocar de computador?</summary>
+              <p>A chave só funciona no computador para o qual foi emitida. Para trocar o computador principal, peça a transferência pelos canais oficiais: uma nova chave é emitida para o novo computador, nas condições informadas, e o anterior deixa de usar o programa. Trocar peças, como a placa-mãe, também pode exigir nova chave. Os dados vão pelo backup do próprio aplicativo. Para trocar o computador secundário, basta revogar o antigo e gerar a chave do novo.</p>
+            </details>
+            <details>
+              <summary>Quais marketplaces o Bapell atende?</summary>
+              <p>Você mesmo cadastra as plataformas em que vende — Mercado Livre, Shopee, Amazon, Magalu, loja física ou outras — e informa as taxas de cada produto. O Bapell não se conecta às plataformas: as taxas não se atualizam sozinhas. No Mercado Livre, o preço dos anúncios Premium e Clássico é calculado lado a lado.</p>
+            </details>
+            <details>
+              <summary>O Bapell emite nota fiscal?</summary>
+              <p>Não. O módulo Notas Fiscais guarda e organiza os arquivos das notas (PDF, XML ou imagem) de cada empresa, com número, emitente e responsável, para você encontrar depois. Ele não emite, não transmite à SEFAZ e não tem validade fiscal.</p>
+            </details>
+            <details>
+              <summary>Como faço backup dos meus dados?</summary>
+              <p>Pela Central de Ajuda, em Backup e Transferência de Dados: você exporta os dados para um arquivo — com as fotos dos produtos, ele sai em .zip — e importa em outro computador, escolhendo o que restaurar. O backup é manual e fica com você: não é automático nem vai para a nuvem, e o arquivo não tem senha. Na rede local, o computador principal também faz cópias automáticas do banco de dados.</p>
+            </details>
+            <details>
+              <summary>Posso desistir da compra?</summary>
+              <p>Pode. Na compra feita fora de loja física, você tem 7 dias para desistir, como prevê o artigo 49 do Código de Defesa do Consumidor. Peça pelo e-mail ou pelo WhatsApp oficiais: os valores são devolvidos na forma da lei e a licença é cancelada.</p>
+            </details>
+            <details>
+              <summary>Como recebo suporte?</summary>
+              <p>Pelos canais oficiais: e-mail <a href="mailto:bapellgestorpro@gmail.com">bapellgestorpro@gmail.com</a> e WhatsApp (41) 98899-5503, por ordem de chegada. Na Licença Anual e no Pro, o suporte vale durante a validade. O aplicativo também tem uma Central de Ajuda, com 16 tutoriais interativos que mostram cada tela passo a passo.</p>
+            </details>
+          </div>
         </div>
       </div>
     </section>
@@ -675,10 +830,11 @@
       <div>
         <h2>Produto</h2>
         <ul>
+          <li><a href="#simulador">Simulador de preço</a></li>
           <li><a href="#como-funciona">Como funciona</a></li>
-          <li><a href="#equipe">Equipe e computadores</a></li>
           <li><a href="#modulos">Módulos</a></li>
           <li><a href="#plus">Módulos Plus</a></li>
+          <li><a href="#equipe">Equipe e computadores</a></li>
           <li><a href="#planos">Planos e preços</a></li>
           <li><a href="#faq">Perguntas frequentes</a></li>
         </ul>
@@ -707,6 +863,11 @@
     </div>
   </footer>
 
+  <!-- Voltar ao topo (computador) -->
+  <a class="subir" id="subir" href="#topo" aria-label="Voltar ao topo" tabindex="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 14 12 8 18 14" /></svg>
+  </a>
+
   <!-- Barra de compra no celular -->
   <div class="barra-compra" id="barraCompra" aria-hidden="true">
     <a class="btn btn--azul" href="#planos" tabindex="-1">Ver planos</a>
@@ -721,9 +882,15 @@
     <div class="mod-modal__painel" role="dialog" aria-modal="true" aria-labelledby="modTitulo" tabindex="-1" id="modPainel">
       <div class="mod-modal__topo">
         <span class="mod-modal__pos" id="modPos"></span>
-        <button type="button" class="mod-modal__x" data-fechar aria-label="Fechar">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
+        <div class="mod-modal__topo-acoes">
+          <button type="button" class="mod-modal__link" id="modCopiar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <span id="modCopiarTxt">Copiar link</span>
+          </button>
+          <button type="button" class="mod-modal__x" data-fechar aria-label="Fechar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
       </div>
       <div class="mod-modal__rolagem" id="modRolagem">
         <div class="mod-modal__conteudo" id="modConteudo"></div>

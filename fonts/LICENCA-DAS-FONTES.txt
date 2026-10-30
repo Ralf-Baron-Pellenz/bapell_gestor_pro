@@ -1,0 +1,10 @@
+Fontes usadas no site do Bapell Gestor Pro (as mesmas do aplicativo)
+
+Sora — Copyright 2019 The Sora Project Authors (https://github.com/sora-xor/sora-font)
+DM Sans — Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)
+
+As duas fontes são distribuídas sob a SIL Open Font License, versão 1.1,
+que permite usá-las, incorporá-las e redistribuí-las com o site.
+Texto da licença: https://openfontlicense.org (também em https://scripts.sil.org/OFL).
+Os arquivos .woff2 trazem o aviso de copyright e o endereço da licença nos
+próprios metadados.

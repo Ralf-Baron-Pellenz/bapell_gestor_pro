@@ -1,13 +1,16 @@
 /* ════════════════════════════════════════════════════════════════
    Bapell Gestor Pro — site de vendas · script.js
+   0. Tema (Claro, Padrão e Dark Absoluto, como no app)
    1. Dados dos módulos (conferidos no aplicativo e nos Termos de Uso 5.0)
-   2. Calculadora da etiqueta (topo)
-   3. Navegação, menu do celular e barra de compra
+   2. Calculadora da etiqueta (simulador; custo do produto fixo em R$ 289,91)
+   3. Navegação, menu do celular, barra de compra e voltar ao topo
    4. "Como funciona": tela que troca com a rolagem
    5. Equipe: abas das telas
-   6. Vídeo
-   7. Módulos: filtro, apresentação (#modulo/id) e ampliar tela
+   6. Vídeo: começa sozinho quando chega na tela (computador e celular)
+   7. Módulos: filtro, apresentação (#modulo/id), copiar link e ampliar tela
    8. Planos: prazo no celular
+   9. Monte o seu plano (compra e mudança de plano)
+   10. Dúvidas: busca
    ════════════════════════════════════════════════════════════════ */
 "use strict";
 
@@ -718,11 +721,33 @@
   const svg = (p, cls) => `<svg class="${cls || "ico"}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
 
   /* ══════════════════════════════════════
+     0. TEMA — Claro, Padrão e Dark Absoluto, como no app.
+     O tema já é aplicado no <head> (sem piscar); aqui ficam os botões.
+     ══════════════════════════════════════ */
+  const TEMAS = ["light", "dark", "midnight"];
+  const COR_DA_BARRA = { light: "#F4F6FA", dark: "#121826", midnight: "#000000" };
+  const CHAVE_TEMA = "bapell_site_tema";
+  const raiz = document.documentElement;
+  const metaCor = $('meta[name="theme-color"]');
+  const aplicarTema = (t, salvar) => {
+    if (TEMAS.indexOf(t) < 0) t = "dark";
+    raiz.setAttribute("data-theme", t);
+    $$("[data-tema]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tema === t)));
+    if (metaCor) metaCor.setAttribute("content", COR_DA_BARRA[t]);
+    if (salvar) { try { localStorage.setItem(CHAVE_TEMA, t); } catch (e) {} }
+  };
+  aplicarTema(raiz.getAttribute("data-theme") || "dark", false);
+  $$("[data-tema]").forEach((b) => b.addEventListener("click", () => aplicarTema(b.dataset.tema, true)));
+  // Outra aba do site trocou o tema: acompanha
+  window.addEventListener("storage", (e) => { if (e.key === CHAVE_TEMA && e.newValue) aplicarTema(e.newValue, false); });
+
+  /* ══════════════════════════════════════
      2. CALCULADORA DA ETIQUETA
      Preço = (custo + frete [+ taxa fixa]) ÷ (1 − (comissão + imposto + margem)).
      A taxa fixa só entra quando o preço fica até R$ 79,00 — a regra do app.
      ══════════════════════════════════════ */
   const LIMITE_TAXA_FIXA = 79;
+  const CUSTO_FIXO = 289.91; // o custo do produto no simulador é fixo e não pode ser alterado
   const lerDinheiro = (v) => {
     const s = String(v || "").replace(/[^\d,.-]/g, "").replace(/\.(?=\d{3}(\D|$))/g, "").replace(",", ".");
     const n = parseFloat(s);
@@ -738,6 +763,7 @@
       preco: $("#preco"), lucro: $("#lucro"), margemReal: $("#margemReal"), taxaLinha: $("#taxaLinha"),
       warn: $("#warn"), bar: $("#bar"), legenda: $("#barLegenda"),
     };
+    const resetar = $("#etqReset");
     let ultimoPreco = 0;
     let animando = 0;
 
@@ -757,8 +783,14 @@
     // Enquanto o campo mostra o valor de fábrica, vale o valor exato (data-exato),
     // como o app faz: exibe o custo total com 2 casas e calcula com todas.
     const valorCampo = (el) => (el.dataset.exato && el.value === el.defaultValue ? Number(el.dataset.exato) : lerDinheiro(el.value));
+    const todos = () => Object.values(campos).concat(Object.values(deslizes));
+    // Custo do produto: campo só de leitura, sempre R$ 289,91 (mesmo que alguém mexa no campo)
+    const TEXTO_CUSTO = fmtDinheiro(CUSTO_FIXO);
+    campos.custo.readOnly = true;
+    campos.custo.defaultValue = TEXTO_CUSTO;
     const calcular = () => {
-      const custo = valorCampo(campos.custo);
+      if (campos.custo.value !== TEXTO_CUSTO) campos.custo.value = TEXTO_CUSTO;
+      const custo = CUSTO_FIXO;
       const frete = valorCampo(campos.frete);
       const tf = valorCampo(campos.taxaFixa);
       const c = Number(deslizes.comissao.value), i = Number(deslizes.imposto.value), m = Number(deslizes.margem.value);
@@ -767,14 +799,18 @@
         if (out) out.textContent = PCT.format(Number(el.value)) + "%";
         el.style.setProperty("--pos", ((el.value - el.min) / (el.max - el.min)) * 100 + "%");
       });
+      // "Voltar aos valores do exemplo" só aparece depois de alguma mudança
+      if (resetar) resetar.hidden = todos().every((el) => el.value === el.defaultValue);
       const soma = c + i + m;
       if (soma >= 100) {
+        cancelAnimationFrame(animando); // a animação do preço anterior não pode escrever por cima do "—"
         saida.warn.hidden = false;
         saida.preco.textContent = "—";
         saida.lucro.textContent = "—";
         saida.margemReal.textContent = "";
         saida.taxaLinha.textContent = "";
         saida.bar.innerHTML = "";
+        saida.legenda.innerHTML = "";
         ultimoPreco = 0;
         return;
       }
@@ -806,28 +842,51 @@
     };
 
     Object.values(campos).forEach((el) => {
+      if (el === campos.custo) { el.addEventListener("input", calcular); el.addEventListener("change", calcular); return; }
       el.addEventListener("input", calcular);
       el.addEventListener("focus", () => el.select());
       el.addEventListener("blur", () => { el.value = fmtDinheiro(lerDinheiro(el.value)); calcular(); });
     });
     Object.values(deslizes).forEach((el) => el.addEventListener("input", calcular));
+    if (resetar) resetar.addEventListener("click", () => {
+      todos().forEach((el) => { el.value = el.defaultValue; });
+      calcular();
+      campos.frete.focus();
+    });
     calcular();
+
+    // A etiqueta "sai da impressora" quando chega na tela
+    if (!reduzir && "IntersectionObserver" in window) {
+      etq.classList.add("espera");
+      const io = new IntersectionObserver((ents) => {
+        if (!ents.some((en) => en.isIntersecting)) return;
+        etq.classList.remove("espera");
+        etq.classList.add("imprime");
+        io.disconnect();
+      }, { threshold: 0.2 });
+      io.observe(etq);
+      // Se a pessoa chegar aos campos pelo teclado antes de rolar, a etiqueta já aparece
+      etq.addEventListener("focusin", () => { etq.classList.remove("espera"); }, { once: true });
+    }
   }
 
   /* ══════════════════════════════════════
-     3. NAVEGAÇÃO
+     3. NAVEGAÇÃO, MENU DO CELULAR, BARRA DE COMPRA E VOLTAR AO TOPO
      ══════════════════════════════════════ */
   const nav = $("#nav");
   const menuBtn = $("#navMenu");
   const menu = $("#menuMobile");
   const barra = $("#barraCompra");
+  const subir = $("#subir");
   const planos = $("#planos");
   const final = $("#comecar");
+  const LARGURA_MENU = 1100; // abaixo disso os links ficam no menu (styles.css)
 
   const fecharMenu = () => {
     if (!menu || menu.hidden) return;
     menu.hidden = true;
     menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.setAttribute("aria-label", "Abrir o menu");
     document.body.classList.remove("menu-aberto");
   };
   if (menuBtn && menu) {
@@ -835,12 +894,13 @@
       const abrir = menu.hidden;
       menu.hidden = !abrir;
       menuBtn.setAttribute("aria-expanded", String(abrir));
+      menuBtn.setAttribute("aria-label", abrir ? "Fechar o menu" : "Abrir o menu");
       document.body.classList.toggle("menu-aberto", abrir);
       if (abrir) { const a = $("a", menu); if (a) a.focus(); }
     });
     $$("a", menu).forEach((a) => a.addEventListener("click", fecharMenu));
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") fecharMenu(); });
-    window.addEventListener("resize", () => { if (window.innerWidth > 960) fecharMenu(); });
+    window.addEventListener("resize", () => { if (window.innerWidth > LARGURA_MENU) fecharMenu(); });
   }
 
   // Link da seção visível no menu
@@ -852,9 +912,9 @@
     pendente = false;
     const y = window.scrollY, vh = window.innerHeight;
     if (nav) nav.classList.toggle("nav--rolou", y > 8);
-    let atual = null;
-    secoesNav.forEach((s) => { if (s.getBoundingClientRect().top < vh * 0.4) atual = s.id; });
-    linksNav.forEach((a) => a.classList.toggle("ativo", a.getAttribute("href") === "#" + atual));
+    let atualSecao = null;
+    secoesNav.forEach((s) => { if (s.getBoundingClientRect().top < vh * 0.4) atualSecao = s.id; });
+    linksNav.forEach((a) => a.classList.toggle("ativo", a.getAttribute("href") === "#" + atualSecao));
     if (barra && planos) {
       const pr = planos.getBoundingClientRect();
       const fr = final ? final.getBoundingClientRect() : { top: Infinity };
@@ -862,6 +922,11 @@
       barra.classList.toggle("barra--visivel", mostrar);
       barra.setAttribute("aria-hidden", String(!mostrar));
       $$("a", barra).forEach((a) => (a.tabIndex = mostrar ? 0 : -1));
+    }
+    if (subir) {
+      const ver = y > vh * 1.2;
+      subir.classList.toggle("subir--visivel", ver);
+      subir.tabIndex = ver ? 0 : -1;
     }
   };
   window.addEventListener("scroll", () => { if (!pendente) { pendente = true; requestAnimationFrame(aoRolar); } }, { passive: true });
@@ -874,10 +939,19 @@
   const passos = $$(".passo");
   const telaComo = $("#comoTela");
   const tituloComo = $("#comoTitulo");
+  const pontosComo = $("#comoPontos");
+  if (pontosComo && passos.length) pontosComo.innerHTML = passos.map(() => "<span></span>").join("");
+  const marcarPonto = (p) => {
+    if (!pontosComo) return;
+    const i = passos.indexOf(p);
+    $$("span", pontosComo).forEach((s, k) => s.classList.toggle("ativo", k === i));
+  };
+  marcarPonto($(".passo--ativo") || passos[0]);
   if (passos.length && telaComo && "IntersectionObserver" in window) {
     const ativar = (p) => {
       if (p.classList.contains("passo--ativo")) return;
       passos.forEach((x) => x.classList.toggle("passo--ativo", x === p));
+      marcarPonto(p);
       const src = "img/app/" + p.dataset.tela + ".webp";
       if (tituloComo) tituloComo.textContent = p.dataset.titulo || "";
       if (reduzir) { telaComo.src = src; telaComo.alt = p.dataset.alt || ""; return; }
@@ -927,29 +1001,141 @@
   }
 
   /* ══════════════════════════════════════
-     6. VÍDEO
+     6. VÍDEO — fica na seção "Veja o aplicativo em uso" e começa sozinho
+     quando chega na tela, no computador e no celular.
+     Os navegadores só deixam um vídeo começar sozinho quando ele está sem som
+     (muted) e, no iPhone, quando toca dentro da página (playsinline). Por isso
+     o vídeo começa mudo, em 2×, e a pessoa ativa o som quando quiser.
+     - Tenta tocar quando o vídeo aparece na tela (pelo menos 20% dele), quando
+       os dados chegam e quando a aba volta a ficar visível.
+     - Fora da tela ou com a aba escondida, pausa (economiza bateria e dados)
+       e retoma sozinho depois — a não ser que a pessoa tenha pausado.
+     - Se o navegador bloquear mesmo assim (modo de economia de bateria do
+       iPhone, por exemplo), aparece o botão de reproduzir e o primeiro toque
+       ou clique na página inicia o vídeo.
+     - Começa sozinho também para quem pede menos movimento no sistema (pedido
+       do Bapell); o botão de pausa fica sempre à mão.
      ══════════════════════════════════════ */
   const video = $("#featureVideo");
   if (video) {
     const tela = $("#demoScreen");
     const play = $("#demoPlay");
+    const pausa = $("#pauseBtn");
     const som = $("#soundBtn");
     const cheia = $("#demoFullscreen");
+    const erro = $("#videoErro");
+    const fonte = $("source", video);
     const vel = $$("[data-speed]");
     let velocidade = 2;
+    let parouPeloUsuario = false; // só os botões e o toque no vídeo param o vídeo "de vez"
+    // Visível o bastante para tocar. Com IntersectionObserver, começa "fora" e o observador
+    // decide; sem ele (navegadores muito antigos), vale como visível.
+    let naTela = !("IntersectionObserver" in window);
+    let esperandoGesto = false;
+    let pedidoDaPessoa = 0; // quando a pessoa pediu para tocar (botão, toque no vídeo, gesto liberando)
+
+    // Sem som e dentro da página: as condições para o autoplay (iOS inclusive)
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute("muted", "");
+    video.playsInline = true;
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+    video.autoplay = true;
+
     const aplicarVel = (v) => {
       velocidade = v;
-      try { video.playbackRate = v; } catch (e) {}
+      try { video.defaultPlaybackRate = v; video.playbackRate = v; } catch (e) {}
       vel.forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.speed) === v)));
     };
-    const tocar = () => { const p = video.play(); if (p && p.catch) p.catch(() => {}); };
-    video.addEventListener("play", () => { aplicarVel(velocidade); tela.classList.add("tocando"); });
-    video.addEventListener("pause", () => tela.classList.remove("tocando"));
-    video.addEventListener("loadeddata", () => aplicarVel(velocidade));
-    if (play) play.addEventListener("click", (e) => { e.stopPropagation(); tocar(); });
+    const atualizar = () => {
+      const tocando = !video.paused && !video.ended;
+      tela.classList.toggle("tocando", tocando);
+      if (tocando) tela.classList.remove("bloqueado");
+      if (pausa) pausa.setAttribute("aria-label", tocando ? "Pausar o vídeo" : "Reproduzir o vídeo");
+    };
+    const GESTOS = ["pointerup", "touchend", "mousedown", "keydown"];
+    const soltarGesto = () => {
+      if (!esperandoGesto) return;
+      esperandoGesto = false;
+      GESTOS.forEach((ev) => document.removeEventListener(ev, aoPrimeiroGesto, true));
+    };
+    // Primeiro toque/clique/tecla na página depois de um bloqueio: libera o vídeo.
+    // Se ele estiver fora da tela, toca e pausa na hora — só para ficar liberado.
+    function aoPrimeiroGesto(e) {
+      soltarGesto();
+      if (e && e.target && e.target.closest && e.target.closest("#demoScreen")) return; // o próprio vídeo trata o toque
+      if (parouPeloUsuario) return;
+      pedidoDaPessoa = Date.now();
+      const p = video.play();
+      const depois = () => { if (!naTela || document.visibilityState === "hidden") video.pause(); };
+      // Se o gesto não liberou (ex.: o fim de uma rolagem no celular), espera o próximo
+      if (p && typeof p.then === "function") p.then(depois).catch(() => esperarGesto());
+      else depois();
+    }
+    const esperarGesto = () => {
+      if (esperandoGesto) return;
+      esperandoGesto = true;
+      GESTOS.forEach((ev) => document.addEventListener(ev, aoPrimeiroGesto, { capture: true, passive: true }));
+    };
+    const tentarTocar = (pelaPessoa) => {
+      if (!pelaPessoa && (parouPeloUsuario || !naTela || document.visibilityState === "hidden")) return;
+      if (!video.paused && !video.ended) return;
+      if (tela.classList.contains("sem-video")) return;
+      const p = video.play();
+      if (p && typeof p.then === "function") {
+        p.then(atualizar).catch((err) => {
+          // AbortError: a reprodução foi interrompida por um pause/carregamento; o próximo evento tenta de novo
+          if (err && err.name === "AbortError") return;
+          tela.classList.add("bloqueado");
+          atualizar();
+          esperarGesto();
+        });
+      }
+    };
+    const tocarPelaPessoa = () => { parouPeloUsuario = false; pedidoDaPessoa = Date.now(); soltarGesto(); tentarTocar(true); };
+    const pararPelaPessoa = () => { parouPeloUsuario = true; video.pause(); };
+
+    video.addEventListener("play", () => {
+      // O atributo autoplay pode começar o vídeo ainda fora da tela: pausa até ele aparecer
+      if (!naTela && Date.now() - pedidoDaPessoa > 1500) { video.pause(); return; }
+      aplicarVel(velocidade);
+      atualizar();
+    });
+    video.addEventListener("playing", atualizar);
+    video.addEventListener("pause", () => {
+      atualizar();
+      // Pausou na tela cheia do iPhone (controles do próprio sistema): vale como a pessoa
+      if (video.webkitDisplayingFullscreen) parouPeloUsuario = true;
+    });
+    ["loadedmetadata", "loadeddata", "canplay"].forEach((ev) => video.addEventListener(ev, () => { aplicarVel(velocidade); tentarTocar(); }));
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") tentarTocar();
+      else if (!video.paused) video.pause();
+    });
+    window.addEventListener("pageshow", () => tentarTocar());
+
+    // Arquivo que não carrega: fica a capa e um aviso, sem botões que não fazem nada
+    const semVideo = () => {
+      if (video.readyState >= 2) return; // tem imagem para mostrar: não é falha
+      tela.classList.add("sem-video");
+      tela.classList.remove("tocando");
+      if (erro) erro.hidden = false;
+    };
+    const comVideo = () => {
+      tela.classList.remove("sem-video");
+      if (erro) erro.hidden = true;
+    };
+    if (fonte) fonte.addEventListener("error", semVideo);
+    video.addEventListener("error", semVideo);
+    video.addEventListener("loadeddata", comVideo);
+    video.addEventListener("playing", comVideo);
+
+    if (play) play.addEventListener("click", (e) => { e.stopPropagation(); tocarPelaPessoa(); });
+    if (pausa) pausa.addEventListener("click", (e) => { e.stopPropagation(); if (video.paused) tocarPelaPessoa(); else pararPelaPessoa(); });
     tela.addEventListener("click", (e) => {
       if (e.target.closest(".video__ctl")) return;
-      if (video.paused) tocar(); else video.pause();
+      if (video.paused) tocarPelaPessoa(); else pararPelaPessoa();
     });
     vel.forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); aplicarVel(Number(b.dataset.speed)); }));
     if (som) som.addEventListener("click", (e) => {
@@ -957,31 +1143,37 @@
       video.muted = !video.muted;
       som.setAttribute("aria-pressed", String(!video.muted));
       som.setAttribute("aria-label", video.muted ? "Ativar o som" : "Desativar o som");
-      if (!video.muted && video.paused) tocar();
+      if (!video.muted && video.paused) tocarPelaPessoa();
     });
     if (cheia) cheia.addEventListener("click", async (e) => {
       e.stopPropagation();
       try {
         if (document.fullscreenElement) await document.exitFullscreen();
+        else if (document.webkitFullscreenElement && document.webkitExitFullscreen) document.webkitExitFullscreen();
         else if (tela.requestFullscreen) await tela.requestFullscreen();
+        else if (tela.webkitRequestFullscreen) tela.webkitRequestFullscreen();
         else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
       } catch (err) {}
     });
-    // Começa sozinho, sem som, quando aparece na tela (não para quem pede menos movimento)
-    if (!reduzir && "IntersectionObserver" in window) {
-      let pausaAuto = false; // pausa feita pela rolagem (não conta como "a pessoa parou")
+
+    // Pausa fora da tela e retoma quando volta (pelo menos 20% visível)
+    if ("IntersectionObserver" in window) {
       new IntersectionObserver((ents) => {
         ents.forEach((en) => {
-          if (en.isIntersecting && en.intersectionRatio > 0.5) { if (video.paused && !video.dataset.parou) tocar(); }
-          else if (!video.paused) { pausaAuto = true; video.pause(); }
+          naTela = en.isIntersecting && en.intersectionRatio >= 0.2;
+          if (naTela) tentarTocar();
+          else if (!en.isIntersecting && !video.paused) video.pause();
         });
-      }, { threshold: [0, 0.5] }).observe(tela);
-      video.addEventListener("pause", () => {
-        if (pausaAuto) { pausaAuto = false; return; }
-        if (document.visibilityState === "visible") video.dataset.parou = "1";
-      });
-      video.addEventListener("play", () => { delete video.dataset.parou; });
+      }, { threshold: [0, 0.2] }).observe(tela);
     }
+
+    // O arquivo pode ter falhado antes de este script rodar: confere depois de alguns segundos
+    // (NETWORK_NO_SOURCE sem nenhum dado = nenhuma fonte pôde ser usada)
+    setTimeout(() => { if (video.readyState === 0 && (video.error || video.networkState === 3)) semVideo(); }, 4000);
+
+    aplicarVel(velocidade);
+    atualizar();
+    tentarTocar();
   }
 
   /* ══════════════════════════════════════
@@ -991,8 +1183,11 @@
   const modal = $("#modModal");
   const painel = $("#modPainel");
   const conteudo = $("#modConteudo");
+  const copiar = $("#modCopiar");
+  const copiarTxt = $("#modCopiarTxt");
   let atual = -1;
   let ultimoFoco = null;
+  let tempoCopiado = 0;
 
   if (grade) {
     grade.innerHTML = MODULOS.map((m) => `
@@ -1073,6 +1268,12 @@
       ${m.plus ? `<p class="mm__plano">Este módulo está nos planos <b>Pro</b> e <b>Platinum</b>. <a href="#planos" data-fechar-planos>Ver os planos</a></p>` : ""}`;
   };
 
+  const voltarCopiar = () => {
+    clearTimeout(tempoCopiado);
+    if (copiar) copiar.classList.remove("copiado");
+    if (copiarTxt) copiarTxt.textContent = "Copiar link";
+  };
+
   function abrirModulo(id, historico) {
     const i = MODULOS.findIndex((m) => m.id === id);
     if (i < 0 || !modal) return;
@@ -1080,6 +1281,7 @@
     const m = MODULOS[i];
     if (modal.hidden) ultimoFoco = document.activeElement;
     conteudo.innerHTML = montar(m);
+    voltarCopiar();
     $("#modPos").textContent = (i + 1) + " de " + MODULOS.length;
     $("#modRolagem").scrollTop = 0;
     const principal = $("#mmPrincipal", conteudo);
@@ -1112,6 +1314,40 @@
     if (trocarHash !== false && location.hash.indexOf("#modulo/") === 0) history.pushState({}, "", location.pathname + location.search + "#modulos");
     if (ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
   }
+
+  // Copiar o endereço do módulo aberto (ex.: index.html#modulo/devolucoes), para enviar a alguém
+  const copiarTexto = (t) => {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t);
+    return new Promise((ok, falha) => {
+      const ta = document.createElement("textarea");
+      ta.value = t;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "0";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      let feito = false;
+      try { feito = document.execCommand("copy"); } catch (e) {}
+      ta.remove();
+      if (feito) ok(); else falha(new Error("cópia indisponível"));
+    });
+  };
+  if (copiar) copiar.addEventListener("click", () => {
+    const m = MODULOS[atual];
+    if (!m) return;
+    const url = location.href.split("#")[0] + "#modulo/" + m.id;
+    const avisar = (txt, deuCerto) => {
+      clearTimeout(tempoCopiado);
+      copiar.classList.toggle("copiado", deuCerto);
+      if (copiarTxt) copiarTxt.textContent = txt;
+      tempoCopiado = setTimeout(voltarCopiar, 2400);
+    };
+    copiarTexto(url)
+      .then(() => avisar("Link copiado", true))
+      .catch(() => avisar("Copie o endereço da barra do navegador", false))
+      .then(() => copiar.focus());
+  });
 
   if (modal) {
     $$("[data-fechar]", modal).forEach((b) => b.addEventListener("click", () => fecharModulo()));
@@ -1167,25 +1403,203 @@
   const prazoBtns = $$("[data-prazo-btn]");
   const listaPlanos = $("#plans");
   const tabela = $("#cmp");
+  const escolherPrazo = (p, foco) => {
+    if (!listaPlanos) return;
+    listaPlanos.dataset.prazo = p;
+    if (tabela) tabela.dataset.prazo = p;
+    prazoBtns.forEach((b) => {
+      const sim = b.dataset.prazoBtn === p;
+      b.setAttribute("aria-checked", String(sim));
+      b.tabIndex = sim ? 0 : -1;
+      if (sim && foco) b.focus();
+    });
+  };
   if (prazoBtns.length && listaPlanos) {
-    const escolher = (p, foco) => {
-      listaPlanos.dataset.prazo = p;
-      if (tabela) tabela.dataset.prazo = p;
-      prazoBtns.forEach((b) => {
-        const sim = b.dataset.prazoBtn === p;
-        b.setAttribute("aria-checked", String(sim));
-        b.tabIndex = sim ? 0 : -1;
-        if (sim && foco) b.focus();
-      });
-    };
     prazoBtns.forEach((b, i) => {
-      b.addEventListener("click", () => escolher(b.dataset.prazoBtn));
+      b.addEventListener("click", () => escolherPrazo(b.dataset.prazoBtn));
       b.addEventListener("keydown", (e) => {
         if (!/Arrow(Left|Right|Up|Down)/.test(e.key)) return;
         e.preventDefault();
-        escolher(prazoBtns[(i + 1) % prazoBtns.length].dataset.prazoBtn, true);
+        escolherPrazo(prazoBtns[(i + 1) % prazoBtns.length].dataset.prazoBtn, true);
       });
     });
+  }
+
+  /* ══════════════════════════════════════
+     9. MONTE O SEU PLANO
+     Comprar agora: prazo + módulos Plus + computadores → o plano e o total.
+     Já tenho licença: a diferença pelos preços de tabela (licença ativa).
+     Os preços são os mesmos dos cartões dos planos.
+     ══════════════════════════════════════ */
+  const montarCaixa = $("#montar");
+  if (montarCaixa) {
+    const PRECO = { anual: 419, pro: 599.9, vitalicia: 997, platinum: 1249.9 };
+    const NOME = { anual: "Licença Anual", pro: "Pro", vitalicia: "Licença Vitalícia", platinum: "Platinum" };
+    const NA_MENSAGEM = { anual: "a *Licença Anual*", pro: "o plano *Pro*", vitalicia: "a *Licença Vitalícia*", platinum: "o plano *Platinum*" };
+    const PRAZO_DO_PLANO = { anual: "anual", pro: "anual", vitalicia: "vitalicia", platinum: "vitalicia" };
+    const DATA_PLAN = { anual: "anual", pro: "anual-planilhas", vitalicia: "vitalicia", platinum: "vitalicia-planilhas" };
+    const UPGRADES = { anual: ["pro", "vitalicia", "platinum"], pro: ["platinum"], vitalicia: ["platinum"] };
+    const INCLUSOS = 2;
+    const POR_COMPUTADOR = 300;
+    const MAX_COMPUTADORES = 50;
+    const linkWhats = (msg) => "https://api.whatsapp.com/send/?phone=5541988995503&text=" + encodeURIComponent(msg) + "&type=phone_number&app_absent=0";
+    const centavos = (n) => Math.round(n * 100) / 100;
+    const marcado = (nome) => { const r = $('input[name="' + nome + '"]:checked', montarCaixa); return r ? r.value : ""; };
+    const txt = (id, t) => { const el = $("#" + id); if (el) el.textContent = t; };
+
+    // Abas: Comprar agora / Já tenho licença
+    const abasModo = $$("[data-modo]", montarCaixa);
+    const corpoNovo = $("#montarNovo");
+    const corpoUp = $("#montarUp");
+    const escolherModo = (modo, foco) => {
+      abasModo.forEach((b) => {
+        const sim = b.dataset.modo === modo;
+        b.setAttribute("aria-selected", String(sim));
+        b.tabIndex = sim ? 0 : -1;
+        if (sim && foco) b.focus();
+      });
+      corpoNovo.hidden = modo !== "novo";
+      corpoUp.hidden = modo !== "upgrade";
+    };
+    abasModo.forEach((b, i) => {
+      b.addEventListener("click", () => escolherModo(b.dataset.modo));
+      b.addEventListener("keydown", (e) => {
+        if (!/Arrow(Left|Right)/.test(e.key)) return;
+        e.preventDefault();
+        escolherModo(abasModo[(i + 1) % abasModo.length].dataset.modo, true);
+      });
+    });
+    $$("[data-montar-upgrade]").forEach((a) => a.addEventListener("click", () => escolherModo("upgrade")));
+
+    // Comprar agora
+    const comps = $("#mComps");
+    const menos = $("#mMenos");
+    const mais = $("#mMais");
+    const lerComps = () => {
+      const bruto = String(comps.value).trim();
+      if (!bruto) return INCLUSOS; // campo vazio (apagando para digitar outro número)
+      const n = Math.round(Number(bruto.replace(",", ".")));
+      return Number.isFinite(n) ? Math.min(MAX_COMPUTADORES, Math.max(1, n)) : INCLUSOS;
+    };
+    const planoEscolhido = () => {
+      const vit = marcado("mPrazo") === "vitalicia";
+      const plus = marcado("mPlus") === "sim";
+      return vit ? (plus ? "platinum" : "vitalicia") : (plus ? "pro" : "anual");
+    };
+    const calcularNovo = () => {
+      const p = planoEscolhido();
+      const n = lerComps();
+      const extras = Math.max(0, n - INCLUSOS);
+      const valorExtras = extras * POR_COMPUTADOR;
+      const total = centavos(PRECO[p] + valorExtras);
+      txt("mPlano", NOME[p]);
+      txt("mPlanoRot", NOME[p]);
+      txt("mPlanoVal", BRL.format(PRECO[p]));
+      const linhaExtra = $("#mExtraLinha");
+      if (linhaExtra) linhaExtra.hidden = extras === 0;
+      txt("mExtraRot", extras === 1 ? "1 computador adicional" : extras + " computadores adicionais");
+      txt("mExtraVal", BRL.format(valorExtras));
+      txt("mTotal", BRL.format(total));
+      const anual = PRAZO_DO_PLANO[p] === "anual";
+      let nota = anual ? "A licença vale 365 dias e inclui 2 computadores." : "Pagamento único, para a versão adquirida. Inclui 2 computadores.";
+      if (extras) nota += " Cada computador a mais custa R$ 300,00. Vale o valor confirmado na contratação.";
+      txt("mNota", nota);
+      menos.disabled = n <= 1;
+      mais.disabled = n >= MAX_COMPUTADORES;
+      // Com 2 computadores, o pedido é o mesmo do botão de WhatsApp do plano
+      const botaoPlano = $('.plano .btn--wa[data-plan="' + DATA_PLAN[p] + '"]');
+      const pedir = $("#mComprar");
+      if (pedir) {
+        pedir.href = extras === 0 && botaoPlano
+          ? botaoPlano.getAttribute("href")
+          : linkWhats("Olá! Gostaria de comprar " + NA_MENSAGEM[p] + " do *Bapell Gestor Pro* para *" + n + " computadores* (" +
+              (extras === 1 ? "1 computador adicional" : extras + " computadores adicionais") + ").");
+      }
+    };
+    $$('input[name="mPrazo"], input[name="mPlus"]', montarCaixa).forEach((r) => r.addEventListener("change", calcularNovo));
+    comps.addEventListener("input", calcularNovo);
+    comps.addEventListener("blur", () => { comps.value = String(lerComps()); calcularNovo(); });
+    menos.addEventListener("click", () => { comps.value = String(Math.max(1, lerComps() - 1)); calcularNovo(); });
+    mais.addEventListener("click", () => { comps.value = String(Math.min(MAX_COMPUTADORES, lerComps() + 1)); calcularNovo(); });
+
+    // "Ver o plano": mostra o cartão do plano indicado, já com o prazo certo no celular
+    const ver = $("#mVer");
+    if (ver) ver.addEventListener("click", (e) => {
+      const p = planoEscolhido();
+      const cartao = $('.plano[data-plano="' + p + '"]');
+      if (!cartao) return;
+      e.preventDefault();
+      escolherPrazo(PRAZO_DO_PLANO[p]);
+      $$(".plano--destacado").forEach((x) => x.classList.remove("plano--destacado"));
+      cartao.classList.add("plano--destacado");
+      cartao.setAttribute("tabindex", "-1");
+      cartao.scrollIntoView({ behavior: reduzir ? "auto" : "smooth", block: "center" });
+      cartao.focus({ preventScroll: true });
+      setTimeout(() => cartao.classList.remove("plano--destacado"), 2600);
+    });
+
+    // Já tenho licença
+    const destinos = $("#mDestinos");
+    const montarDestinos = () => {
+      const a = marcado("mAtual") || "anual";
+      const antes = marcado("mDestino");
+      const lista = UPGRADES[a] || [];
+      const escolhido = lista.indexOf(antes) >= 0 ? antes : lista[0];
+      destinos.innerHTML = lista.map((d) => `
+        <label class="opcao"><input type="radio" name="mDestino" value="${d}"${d === escolhido ? " checked" : ""} /><span><b>${esc(NOME[d])}</b><small>${esc(BRL.format(PRECO[d]))}</small></span></label>`).join("");
+      $$('input[name="mDestino"]', destinos).forEach((r) => r.addEventListener("change", calcularUp));
+    };
+    const calcularUp = () => {
+      const a = marcado("mAtual") || "anual";
+      const d = marcado("mDestino") || (UPGRADES[a] || [])[0];
+      if (!d) return;
+      txt("mUpTitulo", NOME[a] + " → " + NOME[d]);
+      txt("mUpNovoRot", NOME[d]);
+      txt("mUpNovo", BRL.format(PRECO[d]));
+      txt("mUpPago", "− " + BRL.format(PRECO[a]));
+      txt("mUpTotal", BRL.format(centavos(PRECO[d] - PRECO[a])));
+      const pedir = $("#mUpPedir");
+      if (pedir) pedir.href = linkWhats("Olá! Tenho " + NA_MENSAGEM[a] + " do *Bapell Gestor Pro* e gostaria de mudar para " + NA_MENSAGEM[d] + ".");
+    };
+    $$('input[name="mAtual"]', montarCaixa).forEach((r) => r.addEventListener("change", () => { montarDestinos(); calcularUp(); }));
+
+    montarDestinos();
+    calcularUp();
+    calcularNovo();
+  }
+
+  /* ══════════════════════════════════════
+     10. DÚVIDAS — busca nas perguntas (sem acento e sem diferenciar maiúsculas)
+     ══════════════════════════════════════ */
+  const buscaFaq = $("#faqBusca");
+  if (buscaFaq) {
+    const itens = $$(".faq__lista details");
+    const normal = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+    const textos = itens.map((d) => normal(d.textContent));
+    const qtd = $("#faqQtd");
+    const vazio = $("#faqVazio");
+    const abertosPelaBusca = new Set();
+    const filtrarFaq = () => {
+      const termos = normal(buscaFaq.value.trim()).split(/\s+/).filter(Boolean);
+      let n = 0;
+      itens.forEach((d, i) => {
+        const sim = termos.every((t) => textos[i].indexOf(t) >= 0);
+        d.hidden = !sim;
+        if (sim) n++;
+      });
+      // Uma resposta só: já abre; ao limpar a busca, fecha o que a busca abriu
+      abertosPelaBusca.forEach((d) => { if (!termos.length || d.hidden || n !== 1) { d.open = false; abertosPelaBusca.delete(d); } });
+      if (termos.length && n === 1) {
+        const unico = itens.find((d) => !d.hidden);
+        if (unico && !unico.open) { unico.open = true; abertosPelaBusca.add(unico); }
+      }
+      if (qtd) qtd.textContent = termos.length ? (n === 1 ? "1 pergunta" : n + " perguntas") : "";
+      if (vazio) vazio.hidden = n > 0;
+    };
+    buscaFaq.addEventListener("input", filtrarFaq);
+    buscaFaq.addEventListener("keydown", (e) => { if (e.key === "Escape" && buscaFaq.value) { e.stopPropagation(); buscaFaq.value = ""; filtrarFaq(); } });
+    // A pessoa abriu ou fechou uma resposta: deixa como ela quer
+    itens.forEach((d) => d.addEventListener("toggle", () => { if (!d.open) abertosPelaBusca.delete(d); }));
   }
 
   // Ano no rodapé
